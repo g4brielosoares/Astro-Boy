@@ -1,0 +1,17 @@
+---
+import HeaderLink from "./HeaderLink.astro";
+const { qtd } = Astro.props;
+
+const elementosParaRenderizar = Array.from({ length: qtd });
+---
+
+<div
+  class="flex flex-col space-y-6 fixed p-6 right-2 top-1/2 -translate-y-1/2 bg-[#00000080] backdrop-blur-xl
+  rounded-full flex items-center justify-between"
+>
+  {
+    elementosParaRenderizar.map((_, index) => (
+      <HeaderLink href={`/#${index + 1}`}>{index + 1}</HeaderLink>
+    ))
+  }
+</div>
