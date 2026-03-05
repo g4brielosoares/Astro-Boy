@@ -2,7 +2,7 @@
 title: "WP vs Astro: Comparando Stacks de Desenvolvimento"
 description: "Comparando as diferenças entre WordPress e Astro JS em termos de performance, manutenção e escalabilidade."
 pubDate: "Mar 05 2026"
-heroImage: "../../assets/blog-placeholder-1.jpg"
+heroImage: "../../assets/openGraph.png"
 ---
 
 Este documento destrincha, ponto a ponto, os principais ganhos e implicações técnicas de migrar um projeto baseado em **WordPress (WP + Elementor + Plugins + PHP + BD)** para uma stack moderna com **Astro JS** (com foco em performance, manutenção, controle e escalabilidade).

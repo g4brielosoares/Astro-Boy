@@ -11,13 +11,13 @@ const { post } = Astro.props;
   <a href={`/blog/${post.id}/`}>
     {
       post.data.heroImage && (
-        <div class="overflow-hidden rounded-xl">
+        <div class="overflow-hidden rounded-xl aspect-5/3 transition duration-400">
           <Image
-            width={720}
-            height={360}
+            width={480}
             src={post.data.heroImage}
+            format="webp"
             alt="Imagem Destaque"
-            class="scale-105 hover:scale-100 transition duration-400"
+            class="scale-105 hover:scale-100 transition duration-400 object-cover w-full h-full"
           />
         </div>
       )

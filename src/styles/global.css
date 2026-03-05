@@ -15,6 +15,10 @@
   --shadow-bear:
     0 2px 6px rgba(96, 115, 159, 0.25), 0 8px 24px rgba(96, 115, 159, 0.33),
     0 16px 32px rgba(96, 115, 159, 0.33);
+
+  --shadow-alt:
+    0 2px 6px rgba(0, 0, 0, 0.05), 0 8px 24px rgba(0, 0, 0, 0.12),
+    0 16px 32px rgba(0, 0, 0, 0.12);
 }
 
 @layer base {

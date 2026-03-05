@@ -105,6 +105,7 @@ const caixasSlide6: Conteudo[] = [
     title: "Vantagem",
     content:
       "O usuário interage com o que importa, enquanto o site carrega instantaneamente ao fundo.",
+    className: "md:row-span-2",
   },
 ];
 ---
@@ -186,6 +187,7 @@ const caixasSlide6: Conteudo[] = [
     <Slide
       src="https://cdn.gamma.app/fzd9z4zd3y750c3/generated-images/obvHNvgKKhPcudzueCY6r.jpg"
       imgSide="right"
+      class=""
     >
       <SlideNumber>Slide 5</SlideNumber>
       <h2>Roteamento Inteligente</h2>
@@ -209,14 +211,12 @@ const caixasSlide6: Conteudo[] = [
     <Slide>
       <SlideNumber>Slide 6</SlideNumber>
       <h2>O Segredo: Arquitetura de Ilhas (Islands)</h2>
-      <ul class="grid grid-cols-3 gap-5">
+      <ul
+        class="grid grid-cols-1 grid-rows-1 md:grid-cols-2 md:grid-rows-2 md:grid-flow-col gap-5 justify-center items-center"
+      >
         {
           caixasSlide6.map((caixa) => (
-            <Box
-              title={caixa.title}
-              class={caixa.className + "last:row-span-2"}
-              type={Naked}
-            >
+            <Box title={caixa.title} class={caixa.className} type={Naked}>
               <p set:html={caixa.content} />
             </Box>
           ))
