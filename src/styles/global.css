@@ -5,9 +5,6 @@
   --color-accent: #2337ff;
   --color-accent-dark: #000d8a;
   --color-black: rgb(15, 18, 25);
-  --color-gray-default: rgb(96, 115, 159);
-  --color-gray-light: rgb(229, 233, 240);
-  --color-gray-dark: rgb(34, 41, 57);
 
   --font-atkinson: "Atkinson", sans-serif;
   --font-jetbrains: "JetBrains Mono", monospace;
@@ -66,45 +63,11 @@
     @apply w-5/6 max-w-300 mx-auto space-y-6 md:space-y-10 py-16 md:py-24;
   }
 
-  p {
-    @apply leading-normal font-jetbrains font-medium text-xl;
-  }
-
   strong {
     @apply font-black;
   }
 
-  /* Suporte para classes de markdown (Astro <Content />) */
-  .prose p {
-    @apply mb-8;
-  }
-
-  img {
-    @apply max-w-full h-auto rounded-lg;
-  }
-
-  code {
-    @apply py-0.5 px-1 bg-gray-light text-black rounded-sm font-jetbrains text-sm;
-  }
-
-  pre {
-    @apply p-4 rounded-lg overflow-x-auto bg-zinc-900 text-white;
-  }
-
-  pre > code {
-    @apply p-0 bg-transparent rounded-none text-inherit;
-  }
-
-  blockquote {
-    @apply border-l-4 border-accent pl-5 m-0 text-[1.333em] italic;
-  }
-
-  hr {
-    @apply border-none border-t border-gray-light my-8;
-  }
-
-  input,
-  textarea {
-    @apply w-full text-base p-2 border border-gray-light rounded;
+  p {
+    @apply leading-normal font-jetbrains font-medium text-xl;
   }
 }

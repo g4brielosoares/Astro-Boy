@@ -1,0 +1,62 @@
+@import "./global.css";
+
+/* Suporte para classes de markdown (Astro <Content />) */
+p,
+li {
+  @apply leading-normal font-jetbrains font-medium text-xl;
+}
+
+li {
+  @apply list-inside;
+}
+
+ul li {
+  @apply list-disc;
+}
+
+ol li {
+  @apply list-decimal;
+}
+
+ul,
+ol {
+  @apply pl-10;
+}
+
+img {
+  @apply max-w-full h-auto rounded-lg m-auto;
+}
+
+code {
+  @apply py-0.5 px-1 bg-[#24292E] rounded-sm font-jetbrains text-sm;
+}
+
+pre {
+  @apply p-5 rounded-lg outline outline-zinc-500 overflow-x-auto bg-[#24292E];
+}
+
+pre > code {
+  @apply p-0 bg-transparent rounded-none text-inherit;
+}
+
+blockquote {
+  @apply border-l-2 border-accent pl-5 text-xl italic;
+}
+
+hr {
+  @apply border-t-2 border-white my-15;
+}
+
+input,
+textarea {
+  @apply w-full p-5 border-0 rounded-lg outline outline-zinc-500 overflow-x-auto bg-[#24292E];
+}
+
+table {
+  @apply rounded-lg outline outline-zinc-500 overflow-hidden;
+}
+
+td,
+th {
+  @apply even:bg-[#24292E90] py-3 px-5 bg-[#24292E];
+}

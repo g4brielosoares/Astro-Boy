@@ -9,7 +9,7 @@ Este documento destrincha, ponto a ponto, os principais ganhos e implicações t
 
 ---
 
-#### 1) Redução de custo de servidor drástica
+#### 1. Redução de custo de servidor drástica
 
 No WordPress, o servidor “trabalha” a cada visita: PHP executa, o banco responde, plugins rodam, e o tema monta a página. Isso exige mais CPU/RAM e geralmente empurra o projeto para planos mais caros (ou para otimizações constantes).
 
@@ -24,7 +24,7 @@ Quando precisar de dinâmica, dá para habilitar SSR/híbrido somente onde impor
 
 ---
 
-#### 2) Sem necessidade de atualizar WP, Elementor, plugins, PHP…
+#### 2. Sem necessidade de atualizar WP, Elementor, plugins, PHP…
 
 WordPress exige manutenção recorrente:
 
@@ -42,7 +42,7 @@ Em Astro, você não tem esse “ecossistema de plugins de runtime” rodando no
 
 ---
 
-#### 3) Sem necessidade de lidar com banco de dados quando desnecessário
+#### 3. Sem necessidade de lidar com banco de dados quando desnecessário
 
 WordPress nasce “acoplado” ao banco: posts, páginas, usuários, config, menus, etc. Mesmo páginas simples acabam carregando BD e camadas do WP.
 
@@ -56,7 +56,7 @@ Isso reduz complexidade, pontos de falha e custo.
 
 ---
 
-#### 4) Versionamento (GIT)
+#### 4. Versionamento (GIT)
 
 No WP, a “fonte da verdade” muitas vezes está:
 
@@ -76,7 +76,7 @@ Isso melhora controle, rastreabilidade e qualidade.
 
 ---
 
-#### 5) Desenvolvimento local (instantâneo, sem rede/servidor, fim do erro 500)
+#### 5. Desenvolvimento local (instantâneo, sem rede/servidor, fim do erro 500)
 
 WordPress local costuma envolver:
 
@@ -98,7 +98,7 @@ Além disso, é muito mais fácil padronizar ambiente para equipe (README + node
 
 ---
 
-#### 6) Integração com IA no desenvolvimento
+#### 6. Integração com IA no desenvolvimento
 
 Uma stack baseada em componentes + arquivos claros tende a ser mais “amigável” para IA:
 
@@ -111,7 +111,7 @@ No WP, IA até ajuda com copy, mas a “montagem” final fica presa à UI do co
 
 ---
 
-#### 7) Reutilização de componentes (React, Vue, Astro, Svelte) — muda em um, muda em todos
+#### 7. Reutilização de componentes (React, Vue, Astro, Svelte) — muda em um, muda em todos
 
 Astro é agnóstico: você pode usar componentes de diferentes ecossistemas no mesmo projeto (quando faz sentido).
 
@@ -126,7 +126,7 @@ No WP, reuso existe, mas geralmente fica preso ao tema/Elementor e não escala t
 
 ---
 
-#### 8) Liberdade criativa total (frameworks web + controle total do DOM)
+#### 8. Liberdade criativa total (frameworks web + controle total do DOM)
 
 Construtores visuais aceleram, mas “aprisionam”:
 
@@ -145,7 +145,7 @@ Resultado: design premium com consistência e performance.
 
 ---
 
-#### 9) SEO 100% controlado e limpo (HTML semântico, rápido por padrão, OpenGraph, Sitemaps nativos)
+#### 9. SEO 100% controlado e limpo (HTML semântico, rápido por padrão, OpenGraph, Sitemaps nativos)
 
 No WP + Elementor, o HTML costuma vir inflado, e performance/SEO dependem de:
 
@@ -166,7 +166,7 @@ SEO deixa de ser “remendo com plugins” e vira “engenharia de base”.
 
 ---
 
-#### 10) SSR e Hibridismo (estático por padrão; dinamiza só onde precisa)
+#### 10. SSR e Hibridismo (estático por padrão; dinamiza só onde precisa)
 
 Astro é “static-first”: gera páginas estáticas, mas permite:
 
@@ -182,7 +182,7 @@ Isso permite um equilíbrio excelente:
 
 ---
 
-#### 11) Automação de deploy com CI/CD (git push -> produção)
+#### 11. Automação de deploy com CI/CD (git push -> produção)
 
 Em WP, deploy “correto” costuma ser trabalhoso:
 
@@ -201,7 +201,7 @@ Isso profissionaliza entrega e reduz erro humano.
 
 ---
 
-#### 12) Memória reduzida (estático por padrão; SSR consome pouco e só quando usado)
+#### 12. Memória reduzida (estático por padrão; SSR consome pouco e só quando usado)
 
 WordPress consome memória a cada request:
 
@@ -219,7 +219,7 @@ Com SSR, existe consumo, mas você liga somente onde precisa e otimiza escopo.
 
 ---
 
-#### 13) Espaço em disco reduzido (ex.: 500MB–1GB no WP vs ~50MB em Astro)
+#### 13. Espaço em disco reduzido (ex.: 500MB–1GB no WP vs ~50MB em Astro)
 
 WordPress acumula:
 
