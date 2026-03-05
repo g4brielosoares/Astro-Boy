@@ -1,6 +1,5 @@
-@import "tailwindcss";
-
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap");
+@import "tailwindcss";
 
 @theme {
   --color-accent: #2337ff;
@@ -34,14 +33,6 @@
     font-display: swap;
   }
 
-  body {
-    @apply bg-zinc-950 text-white;
-  }
-
-  main {
-    @apply max-w-300 mx-auto space-y-6 md:space-y-10 py-16 md:py-24;
-  }
-
   h1,
   h2,
   h3,
@@ -67,12 +58,16 @@
     @apply text-lg md:text-3xl;
   }
 
-  a {
-    @apply text-accent transition-colors hover:text-accent-dark;
+  main {
+    @apply w-5/6 max-w-300 mx-auto space-y-6 md:space-y-10 py-16 md:py-24;
   }
 
   p {
-    @apply mb-4;
+    @apply leading-normal font-jetbrains font-medium text-xl;
+  }
+
+  strong {
+    @apply font-black;
   }
 
   /* Suporte para classes de markdown (Astro <Content />) */
@@ -85,11 +80,11 @@
   }
 
   code {
-    @apply py-0.5 px-1.25 bg-gray-light rounded-xs font-mono text-[0.9rem];
+    @apply py-0.5 px-1 bg-gray-light text-black rounded-sm font-jetbrains text-sm;
   }
 
   pre {
-    @apply p-6 rounded-lg overflow-x-auto bg-gray-dark text-white;
+    @apply p-4 rounded-lg overflow-x-auto bg-zinc-900 text-white;
   }
 
   pre > code {
@@ -107,15 +102,5 @@
   input,
   textarea {
     @apply w-full text-base p-2 border border-gray-light rounded;
-  }
-
-  /* Ajustes Responsivos */
-  @media (max-width: 720px) {
-    body {
-      @apply text-[18px];
-    }
-    main {
-      @apply px-4;
-    }
   }
 }

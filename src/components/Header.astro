@@ -2,13 +2,13 @@
 import HeaderLink from "./HeaderLink.astro";
 ---
 
-<header class="fixed w-full">
+<header class="sticky top-0 w-full p-6 z-999">
   <nav
-    class="w-200 mx-auto m-6 p-4 px-6 bg-[#00000080] backdrop-blur-xl
+    class="max-w-200 mx-auto p-4 px-6 bg-[#00000080] backdrop-blur-xl
   rounded-full flex items-center justify-between"
   >
     <a href="/">
-      <img width="20" src="astro-icon-light-gradient.svg" alt="Logo" />
+      <img width="20" src="/astro-icon-light-gradient.svg" alt="Logo" />
     </a>
     <div class="space-x-6">
       <HeaderLink href="/">Home</HeaderLink>

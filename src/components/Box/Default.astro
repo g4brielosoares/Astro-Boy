@@ -1,0 +1,13 @@
+---
+import type BoxProps from "../../navigation";
+
+type Props = BoxProps;
+const { title, class: className } = Astro.props;
+---
+
+<li
+  class:list={[className, "list-none bg-[#ffffff40] rounded-lg p-5 space-y-5"]}
+>
+  {title && <h4 class="text-white text-2xl">{title}</h4>}
+  <slot />
+</li>

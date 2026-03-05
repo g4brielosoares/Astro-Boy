@@ -15,12 +15,14 @@ interface Props {
   title?: string;
   description?: string;
   image?: ImageMetadata;
+  class?: string;
 }
 
 const {
   title = SITE_TITLE,
   description = SITE_DESCRIPTION,
   image = FallbackImage,
+  class: className,
 } = Astro.props;
 ---
 
@@ -29,7 +31,7 @@ const {
   <head>
     <BaseHead title={title} description={description} image={image} />
   </head>
-  <body>
+  <body class="bg-zinc-950 text-white font-atkinson leading-normal">
     <Header />
     <slot />
     <Footer />

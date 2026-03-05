@@ -1,0 +1,32 @@
+---
+import FormattedDate from "./FormattedDate.astro";
+import Image from "astro/components/Image.astro";
+
+const { post } = Astro.props;
+---
+
+<li
+  class="transition-all duration-400 hover:scale-102 hover:bg-zinc-900 rounded-xl"
+>
+  <a href={`/blog/${post.id}/`}>
+    {
+      post.data.heroImage && (
+        <div class="overflow-hidden rounded-xl">
+          <Image
+            width={720}
+            height={360}
+            src={post.data.heroImage}
+            alt="Imagem Destaque"
+            class="scale-105 hover:scale-100 transition duration-400"
+          />
+        </div>
+      )
+    }
+    <div class="p-4 space-y-4">
+      <h4>{post.data.title}</h4>
+      <p>
+        <FormattedDate date={post.data.pubDate} />
+      </p>
+    </div>
+  </a>
+</li>
