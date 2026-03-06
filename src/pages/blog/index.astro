@@ -9,12 +9,10 @@ const posts = (await getCollection("blog")).sort(
 ---
 
 <Layout title="Blog" description="Um blog que mostra o poder do Astro nativo!">
-  <main>
-    <h1>Blog</h1>
-    <section>
-      <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {posts.map((post) => <PostItem post={post} />)}
-      </ul>
-    </section>
-  </main>
+  <h1>Blog</h1>
+  <section>
+    <ul class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      {posts.map((post) => <PostItem post={post} />)}
+    </ul>
+  </section>
 </Layout>

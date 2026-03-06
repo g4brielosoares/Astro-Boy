@@ -112,116 +112,114 @@ const caixasSlide6: Conteudo[] = [
 
 <Layout>
   <!-- <SlideNav qtd="6" /> -->
-  <main>
-    <img
-      width="800"
-      src="\astro-logo-light-gradient.svg"
-      alt="astro"
-      class="m-auto"
-    />
+  <img
+    width="800"
+    src="\astro-logo-light-gradient.svg"
+    alt="astro"
+    class="m-auto"
+  />
 
-    <Slide>
-      <SlideNumber>Slide 1</SlideNumber>
-      <h2>O Desafio</h2>
-      <ul class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {
-          caixasSlide1.map((caixa) => (
-            <Box title={caixa.title} class={caixa.className} type={caixa.type}>
-              <p set:html={caixa.content} />
-            </Box>
-          ))
-        }
-      </ul>
-    </Slide>
+  <Slide>
+    <SlideNumber>Slide 1</SlideNumber>
+    <h2>O Desafio</h2>
+    <ul class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {
+        caixasSlide1.map((caixa) => (
+          <Box title={caixa.title} class={caixa.className} type={caixa.type}>
+            <p set:html={caixa.content} />
+          </Box>
+        ))
+      }
+    </ul>
+  </Slide>
 
-    <Slide>
-      <SlideNumber>Slide 2</SlideNumber>
-      <h2>Por que o Astro é tão Ágil?</h2>
+  <Slide>
+    <SlideNumber>Slide 2</SlideNumber>
+    <h2>Por que o Astro é tão Ágil?</h2>
 
-      <ul class="space-y-5 text-2xl list-disc pl-10">
-        <li>
-          <strong>Filosofia "Zero JavaScript":</strong> O Astro remove todo o código
-          pesado e envia apenas HTML puro para o navegador.
-        </li>
-        <li>
-          <strong>Build Estático:</strong> O site é "pré-fabricado" no momento da
-          criação. Quando o cliente clica, o site já está pronto, sem precisar "pensar".
-        </li>
-        <li>
-          <strong>Performance Incomparável:</strong> Ideal para Landing Pages (LPs)
-          e Sites Institucionais que precisam converter visitantes em segundos.
-        </li>
-      </ul>
-    </Slide>
+    <ul class="space-y-5 text-2xl list-disc pl-10">
+      <li>
+        <strong>Filosofia "Zero JavaScript":</strong> O Astro remove todo o código
+        pesado e envia apenas HTML puro para o navegador.
+      </li>
+      <li>
+        <strong>Build Estático:</strong> O site é "pré-fabricado" no momento da criação.
+        Quando o cliente clica, o site já está pronto, sem precisar "pensar".
+      </li>
+      <li>
+        <strong>Performance Incomparável:</strong> Ideal para Landing Pages (LPs)
+        e Sites Institucionais que precisam converter visitantes em segundos.
+      </li>
+    </ul>
+  </Slide>
 
-    <Slide>
-      <SlideNumber>Slide 3</SlideNumber>
-      <h2>SEO: O Melhor Amigo do Google</h2>
-      <ul class="grid grid-cols-1 md:grid-cols-3 gap-5">
-        {
-          caixasSlide3.map((caixa) => (
-            <Box title={caixa.title} class={caixa.className} type={WhiteHead}>
-              <p set:html={caixa.content} />
-            </Box>
-          ))
-        }
-      </ul>
-    </Slide>
+  <Slide>
+    <SlideNumber>Slide 3</SlideNumber>
+    <h2>SEO: O Melhor Amigo do Google</h2>
+    <ul class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      {
+        caixasSlide3.map((caixa) => (
+          <Box title={caixa.title} class={caixa.className} type={WhiteHead}>
+            <p set:html={caixa.content} />
+          </Box>
+        ))
+      }
+    </ul>
+  </Slide>
 
-    <Slide>
-      <SlideNumber>Slide 4</SlideNumber>
+  <Slide>
+    <SlideNumber>Slide 4</SlideNumber>
 
-      <h2>Versatilidade: Use o Melhor de Cada Mundo</h2>
+    <h2>Versatilidade: Use o Melhor de Cada Mundo</h2>
 
-      <ul class="grid grid-cols-1 md:grid-cols-3 gap-5">
-        {
-          caixasSlide4.map((caixa) => (
-            <Box title={caixa.title} class={caixa.className} type={Naked}>
-              <p set:html={caixa.content} />
-            </Box>
-          ))
-        }
-      </ul>
-    </Slide>
+    <ul class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      {
+        caixasSlide4.map((caixa) => (
+          <Box title={caixa.title} class={caixa.className} type={Naked}>
+            <p set:html={caixa.content} />
+          </Box>
+        ))
+      }
+    </ul>
+  </Slide>
 
-    <Slide
-      src="https://cdn.gamma.app/fzd9z4zd3y750c3/generated-images/obvHNvgKKhPcudzueCY6r.jpg"
-      imgSide="right"
-      class=""
+  <Slide
+    src="https://cdn.gamma.app/fzd9z4zd3y750c3/generated-images/obvHNvgKKhPcudzueCY6r.jpg"
+    imgSide="right"
+    class=""
+  >
+    <SlideNumber>Slide 5</SlideNumber>
+    <h2>Roteamento Inteligente</h2>
+    <h5 id="5">(Baseado em Arquivos)</h5>
+    <ul class="grid grid-cols-1 gap-5">
+      {
+        caixasSlide5.map((caixa, index) => (
+          <Box
+            title={caixa.title}
+            class={caixa.className}
+            type={NumberLine}
+            index={index++}
+          >
+            <p set:html={caixa.content} />
+          </Box>
+        ))
+      }
+    </ul>
+  </Slide>
+
+  <Slide>
+    <SlideNumber>Slide 6</SlideNumber>
+    <h2>O Segredo: Arquitetura de Ilhas (Islands)</h2>
+    <ul
+      class="grid grid-cols-1 grid-rows-1 md:grid-cols-2 md:grid-rows-2 md:grid-flow-col gap-5 justify-center items-center"
     >
-      <SlideNumber>Slide 5</SlideNumber>
-      <h2>Roteamento Inteligente</h2>
-      <h5 id="5">(Baseado em Arquivos)</h5>
-      <ul class="grid grid-cols-1 gap-5">
-        {
-          caixasSlide5.map((caixa, index) => (
-            <Box
-              title={caixa.title}
-              class={caixa.className}
-              type={NumberLine}
-              index={index++}
-            >
-              <p set:html={caixa.content} />
-            </Box>
-          ))
-        }
-      </ul>
-    </Slide>
-
-    <Slide>
-      <SlideNumber>Slide 6</SlideNumber>
-      <h2>O Segredo: Arquitetura de Ilhas (Islands)</h2>
-      <ul
-        class="grid grid-cols-1 grid-rows-1 md:grid-cols-2 md:grid-rows-2 md:grid-flow-col gap-5 justify-center items-center"
-      >
-        {
-          caixasSlide6.map((caixa) => (
-            <Box title={caixa.title} class={caixa.className} type={Naked}>
-              <p set:html={caixa.content} />
-            </Box>
-          ))
-        }
-      </ul>
-    </Slide>
-  </main>
+      {
+        caixasSlide6.map((caixa) => (
+          <Box title={caixa.title} class={caixa.className} type={Naked}>
+            <p set:html={caixa.content} />
+          </Box>
+        ))
+      }
+    </ul>
+  </Slide>
 </Layout>

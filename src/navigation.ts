@@ -6,3 +6,10 @@ export default interface BoxProps {
   type?: AstroComponentFactory;
   index?: number;
 }
+
+export interface HeadProps {
+  title?: string;
+  description?: string;
+  imageURL?: string;
+  canonicalURL?: string;
+}

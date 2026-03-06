@@ -1,12 +1,8 @@
 ---
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import type { HeadProps } from "../navigation";
 
-interface Props {
-  title: string;
-  description: string;
-  imageURL?: string;
-  canonicalURL?: string;
-}
+type Props = HeadProps;
 
 const {
   title = SITE_TITLE,

@@ -5,35 +5,25 @@ import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 
-import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import type { HeadProps } from "../navigation";
 
-import type { ImageMetadata } from "astro";
+type Props = HeadProps;
 
-import FallbackImage from "../assets/blog-placeholder-1.jpg";
-
-interface Props {
-  title?: string;
-  description?: string;
-  image?: ImageMetadata;
-  class?: string;
-}
-
-const {
-  title = SITE_TITLE,
-  description = SITE_DESCRIPTION,
-  image = FallbackImage,
-  class: className,
-} = Astro.props;
+const { title, description, imageURL, canonicalURL } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="pt-br">
   <head>
-    <BaseHead title={title} description={description} image={image} />
+    <BaseHead {title} {description} {imageURL} />
   </head>
   <body class="bg-zinc-950 text-white font-atkinson leading-normal">
     <Header />
-    <slot />
+    <main
+      class="w-5/6 max-w-300 mx-auto space-y-6 md:space-y-10 py-16 md:py-24"
+    >
+      <slot />
+    </main>
     <Footer />
   </body>
 </html>
