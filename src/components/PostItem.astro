@@ -6,7 +6,7 @@ const { post } = Astro.props;
 ---
 
 <li
-  class="transition-all duration-400 hover:scale-102 hover:bg-zinc-900 rounded-xl"
+  class="group transition-all duration-400 hover:scale-102 hover:bg-zinc-900 rounded-xl"
 >
   <a href={`/blog/${post.id}/`}>
     {
@@ -17,7 +17,7 @@ const { post } = Astro.props;
             src={post.data.heroImage}
             format="webp"
             alt="Imagem Destaque"
-            class="scale-105 hover:scale-100 transition duration-400 object-cover w-full h-full"
+            class="scale-105 group-hover:scale-100 transition duration-400 object-cover w-full h-full"
           />
         </div>
       )
