@@ -87,5 +87,13 @@ table {
 
 td,
 th {
-  @apply even:bg-[#24292E90] py-3 px-5 bg-[#24292E];
+  @apply py-3 px-5;
+}
+
+thead {
+  @apply bg-[#24292E90];
+}
+
+tr {
+  @apply even:bg-[#24292E90];
 }
