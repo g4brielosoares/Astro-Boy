@@ -2,12 +2,13 @@
 import type BoxProps from "../../navigation";
 
 type Props = BoxProps;
-const { title, class: className, index = 0 } = Astro.props;
-const formattedIndex = (index + 1).toString().padStart(2, "0");
+const { title, class: className, index } = Astro.props;
 ---
 
 <li class:list={[className, "list-none space-y-3"]}>
-  <h5 class="text-xl font-normal text-white">{formattedIndex}</h5>
+  <div class="font-jetbrains leading-none text-xl font-normal text-white">
+    {index}
+  </div>
   <div class="w-full h-0.5 bg-linear-to-r from-[#DE386B] to-[#E93FF1]"></div>
   {title && <h4 class="text-white text-2xl">{title}</h4>}
   <slot />

@@ -7,6 +7,7 @@ import SlideNumber from "../components/SlideNumber.astro";
 import Layout from "../layouts/Layout.astro";
 import NumberLine from "../components/Box/NumberLine.astro";
 import Naked from "../components/Box/Naked.astro";
+import NumberCircle from "../components/Box/NumberCircle.astro";
 
 interface Conteudo {
   title?: string;
@@ -108,6 +109,14 @@ const caixasSlide6: Conteudo[] = [
     className: "md:row-span-2",
   },
 ];
+
+const caixasSlideFAQ: Conteudo[] = [
+  {
+    title: "O que é?",
+    content:
+      "Imagine um oceano de conteúdo estático (rápido) com pequenas ilhas de interatividade.",
+  },
+];
 ---
 
 <Layout>
@@ -174,8 +183,13 @@ const caixasSlide6: Conteudo[] = [
 
     <ul class="grid grid-cols-1 md:grid-cols-3 gap-5">
       {
-        caixasSlide4.map((caixa) => (
-          <Box title={caixa.title} class={caixa.className} type={Naked}>
+        caixasSlide4.map((caixa, index) => (
+          <Box
+            title={caixa.title}
+            class={caixa.className}
+            type={NumberCircle}
+            index={`${++index}`}
+          >
             <p set:html={caixa.content} />
           </Box>
         ))
@@ -198,7 +212,7 @@ const caixasSlide6: Conteudo[] = [
             title={caixa.title}
             class={caixa.className}
             type={NumberLine}
-            index={index++}
+            index={`${index <= 9 && "0"}${++index}`}
           >
             <p set:html={caixa.content} />
           </Box>
@@ -216,6 +230,20 @@ const caixasSlide6: Conteudo[] = [
       {
         caixasSlide6.map((caixa) => (
           <Box title={caixa.title} class={caixa.className} type={Naked}>
+            <p set:html={caixa.content} />
+          </Box>
+        ))
+      }
+    </ul>
+  </Slide>
+
+  <Slide>
+    <SlideNumber>Perguntas Frequentes</SlideNumber>
+    <h2>Desvendando o Astro: FAQ</h2>
+    <ul class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      {
+        caixasSlideFAQ.map((caixa, index) => (
+          <Box title={`${++index}`} class="text-center" type={WhiteHead}>
             <p set:html={caixa.content} />
           </Box>
         ))

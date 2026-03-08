@@ -4,7 +4,7 @@ export default interface BoxProps {
   title?: string;
   class?: string;
   type?: AstroComponentFactory;
-  index?: number;
+  index?: string;
 }
 
 export interface HeadProps {
