@@ -61,7 +61,7 @@ code {
 }
 
 pre {
-  @apply p-5 rounded-lg outline outline-zinc-500 overflow-x-auto bg-[#24292E];
+  @apply p-5 rounded-lg overflow-x-auto bg-[#24292E];
 }
 
 pre > code {
@@ -78,11 +78,11 @@ hr {
 
 input,
 textarea {
-  @apply w-full p-5 border-0 rounded-lg outline outline-zinc-500 overflow-x-auto bg-[#24292E];
+  @apply w-full p-5 border-0 rounded-lg overflow-x-auto bg-[#24292E];
 }
 
 table {
-  @apply rounded-lg outline outline-zinc-500 overflow-hidden;
+  @apply rounded-lg overflow-hidden;
 }
 
 td,
