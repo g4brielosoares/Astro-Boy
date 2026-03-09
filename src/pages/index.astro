@@ -16,7 +16,7 @@ interface Conteudo {
   type?: AstroComponentFactory;
 }
 
-const caixasSlide1: Conteudo[] = [
+const caixas1: Conteudo[] = [
   {
     title: "O Problema",
     content: "Hoje, sites são pesados e carregam JavaScript desnecessário.",
@@ -39,7 +39,7 @@ const caixasSlide1: Conteudo[] = [
   },
 ];
 
-const caixasSlide3: Conteudo[] = [
+const caixas3: Conteudo[] = [
   {
     title: "Conteúdo Visível",
     content:
@@ -57,7 +57,7 @@ const caixasSlide3: Conteudo[] = [
   },
 ];
 
-const caixasSlide4: Conteudo[] = [
+const caixas4: Conteudo[] = [
   {
     title: "Liberdade Total",
     content:
@@ -74,7 +74,7 @@ const caixasSlide4: Conteudo[] = [
   },
 ];
 
-const caixasSlide5: Conteudo[] = [
+const caixas5: Conteudo[] = [
   {
     title: "Simplicidade de Pastas",
     content:
@@ -91,7 +91,7 @@ const caixasSlide5: Conteudo[] = [
   },
 ];
 
-const caixasSlide6: Conteudo[] = [
+const caixas6: Conteudo[] = [
   {
     title: "O que é?",
     content:
@@ -110,7 +110,7 @@ const caixasSlide6: Conteudo[] = [
   },
 ];
 
-const caixasSlideFAQ: Conteudo[] = [
+const caixasFAQ: Conteudo[] = [
   {
     title: "O Astro é melhor que o WordPress?",
     content:
@@ -138,6 +138,59 @@ const caixasSlideFAQ: Conteudo[] = [
       "Essa é a maior força do Astro. Graças à sua Arquitetura de Ilhas, ele entrega o conteúdo visual primeiro e só carrega a interatividade necessária depois. É a tecnologia ideal para o público que acessa via 4G/5G em dispositivos móveis.",
   },
 ];
+
+const caixas7: Conteudo[] = [
+  {
+    title: "Pre-rendering",
+    content:
+      "No momento de publicar, o Astro transforma todo o seu projeto em arquivos HTML, CSS e imagens simples.",
+  },
+
+  {
+    title: "Segurança",
+    content:
+      "Sites estáticos são muito mais difíceis de serem invadidos, pois não possuem banco de dados exposto.",
+  },
+  {
+    title: "Hospedagem Barata",
+    content:
+      "Podem ser hospedados em qualquer lugar (Vercel, Netlify, Cloudflare) por um custo quase zero.",
+  },
+];
+
+const caixas8: Conteudo[] = [
+  {
+    title: 'Performance "Extrema" (O fim da lentidão)',
+    content:
+      '<ul><li><strong>WordPress:</strong> Carrega banco de dados e dezenas de plugins, gerando atraso no carregamento.</li><li><strong>Astro:</strong> Entrega apenas HTML puro, site nasce "leve como uma pena". Google recompensa com melhores posições.</li></ul>',
+  },
+
+  {
+    title: "Segurança Blindada",
+    content:
+      '<ul><li><strong>WordPress:</strong> Alvo nº 1 de hackers devido ao banco de dados exposto. Exige plugins e atualizações constantes.</li><li><strong>Astro:</strong> Sem banco de dados exposto ou "área de login" vulnerável. Virtualmente impossível de invadir por técnicas comuns.</li></ul>',
+  },
+  {
+    title: "Componentização: O Lego da Web",
+    content:
+      '<ul><li><strong>WordPress:</strong> Preso ao que o "Tema" permite. Personalização limitada.</li><li><strong>Astro:</strong> Componentes reutilizáveis para personalização sem limites. Altere um componente e atualize todo o site em segundos.</li></ul>',
+  },
+  {
+    title: "Amizade Total com a Inteligência Artificial",
+    content:
+      '<ul><li><strong>WordPress:</strong> Código "macarrônico" dificulta a atuação da IA.</li><li><strong>Astro:</strong> Código limpo e modular. IAs (ChatGPT, Copilot) auxiliam na criação e correção de bugs, acelerando o desenvolvimento em até 5x.</li></ul>',
+  },
+  {
+    title: "Liberdade de Ferramentas (Multiframework)",
+    content:
+      "<ul><li><strong>WordPress:</strong> Preso ao PHP.</li><li><strong>Astro:</strong> Use React, Vue, Svelte e outras tecnologias juntas no mesmo projeto. Uma caixa de ferramentas onde tudo se encaixa.</li></ul>",
+  },
+  {
+    title: "Custo de Manutenção e Hospedagem",
+    content:
+      '<ul><li><strong>WordPress:</strong> Servidores caros e otimizados. Risco de "Taxa de Quebra" por plugins.</li><li><strong>Astro:</strong> Hospedagem gratuita ou irrisória em redes globais (Edge Computing). Build verificado antes de ir ao ar, sem quebras inesperadas.</li></ul>',
+  },
+];
 ---
 
 <Layout>
@@ -154,7 +207,7 @@ const caixasSlideFAQ: Conteudo[] = [
     <h2>O Desafio</h2>
     <ul class="grid grid-cols-1 md:grid-cols-3 gap-6">
       {
-        caixasSlide1.map((caixa) => (
+        caixas1.map((caixa) => (
           <Box title={caixa.title} class={caixa.className} type={caixa.type}>
             <p set:html={caixa.content} />
           </Box>
@@ -188,7 +241,7 @@ const caixasSlideFAQ: Conteudo[] = [
     <h2>SEO: O Melhor Amigo do Google</h2>
     <ul class="grid grid-cols-1 md:grid-cols-3 gap-5">
       {
-        caixasSlide3.map((caixa) => (
+        caixas3.map((caixa) => (
           <Box title={caixa.title} class={caixa.className} type={WhiteHead}>
             <p set:html={caixa.content} />
           </Box>
@@ -204,7 +257,7 @@ const caixasSlideFAQ: Conteudo[] = [
 
     <ul class="grid grid-cols-1 md:grid-cols-3 gap-5">
       {
-        caixasSlide4.map((caixa, index) => (
+        caixas4.map((caixa, index) => (
           <Box
             title={caixa.title}
             class={caixa.className}
@@ -228,7 +281,7 @@ const caixasSlideFAQ: Conteudo[] = [
     <h5 id="5">(Baseado em Arquivos)</h5>
     <ul class="grid grid-cols-1 gap-5">
       {
-        caixasSlide5.map((caixa, index) => (
+        caixas5.map((caixa, index) => (
           <Box
             title={caixa.title}
             class={caixa.className}
@@ -249,7 +302,7 @@ const caixasSlideFAQ: Conteudo[] = [
       class="grid grid-cols-1 grid-rows-1 md:grid-cols-2 md:grid-rows-2 md:grid-flow-col gap-5 justify-center items-center"
     >
       {
-        caixasSlide6.map((caixa) => (
+        caixas6.map((caixa) => (
           <Box title={caixa.title} class={caixa.className} type={Naked}>
             <p set:html={caixa.content} />
           </Box>
@@ -259,11 +312,91 @@ const caixasSlideFAQ: Conteudo[] = [
   </Slide>
 
   <Slide>
+    <SlideNumber>Slide 7</SlideNumber>
+    <h2>Criação de Páginas Estáticas (Build)</h2>
+    <ul class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      {
+        caixas7.map((caixa) => (
+          <Box title={caixa.title} class={caixa.className} type={Naked}>
+            <p set:html={caixa.content} />
+          </Box>
+        ))
+      }
+    </ul>
+  </Slide>
+
+  <Slide>
+    <SlideNumber>Slide 8</SlideNumber>
+    <h2>Astro vs. WordPress: A Escolha Inteligente para Seu Negócio</h2>
+    <p>
+      Trocar WordPress por Astro é como trocar um carro antigo e pesado, que
+      exige manutenção constante, por um veículo de corrida moderno, leve e
+      totalmente personalizado.
+    </p>
+    <ul class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      {
+        caixas8.map((caixa, index) => (
+          <Box
+            title={caixa.title}
+            index={`${index <= 9 && "0"}${++index}`}
+            type={NumberLine}
+          >
+            <p set:html={caixa.content} />
+          </Box>
+        ))
+      }
+    </ul>
+    <table>
+      <colgroup>
+        <col class="w-1/4" />
+        <col class="w-1/3" />
+        <col class="w-1/3" />
+      </colgroup>
+
+      <thead>
+        <tr>
+          <th scope="col">Critério</th>
+          <th scope="col">WordPress</th>
+          <th scope="col">Astro</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <th scope="row">Velocidade Inicial</th>
+          <td>Média/Baixa</td>
+          <td>Instantânea</td>
+        </tr>
+        <tr>
+          <th scope="row">Segurança</th>
+          <td>Depende de plugins</td>
+          <td>Nativa e Alta</td>
+        </tr>
+        <tr>
+          <th scope="row">Liberdade Criativa</th>
+          <td>Limitada pelo Tema</td>
+          <td>Total e Absoluta</td>
+        </tr>
+        <tr>
+          <th scope="row">Auxílio de IA</th>
+          <td>Difícil (menos código e código legado)</td>
+          <td>Excelente (código moderno)</td>
+        </tr>
+        <tr>
+          <th scope="row">Custo de Servidor</th>
+          <td>R$ 50 - R$ 200/mês</td>
+          <td>R$ 0 - R$ 20/mês</td>
+        </tr>
+      </tbody>
+    </table>
+  </Slide>
+
+  <Slide>
     <SlideNumber>Perguntas Frequentes</SlideNumber>
     <h2>Desvendando o Astro: FAQ</h2>
     <ul class="grid grid-cols-1 md:grid-cols-2 gap-5">
       {
-        caixasSlideFAQ.map((caixa, index) => (
+        caixasFAQ.map((caixa, index) => (
           <Box title={caixa.title} index={`${++index}`} type={WhiteHead}>
             <p set:html={caixa.content} />
           </Box>

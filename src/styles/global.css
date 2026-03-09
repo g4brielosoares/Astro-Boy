@@ -59,11 +59,41 @@
     @apply text-lg md:text-3xl;
   }
 
+  li {
+    @apply list-inside;
+  }
+
+  ul li {
+    @apply list-disc;
+  }
+
+  ol li {
+    @apply list-decimal;
+  }
+
   strong {
     @apply font-black;
   }
 
-  p {
-    @apply leading-normal font-jetbrains font-medium text-xl;
+  p,
+  li {
+    @apply leading-normal text-xl;
   }
+}
+
+table {
+  @apply rounded-md overflow-hidden outline-[#4E4855] outline-2;
+}
+
+td,
+th {
+  @apply text-left py-3 px-5;
+}
+
+tr {
+  @apply even:bg-[#352E3D];
+}
+
+thead th {
+  @apply bg-[#352E3D];
 }
