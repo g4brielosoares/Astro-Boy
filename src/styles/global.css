@@ -59,8 +59,9 @@
     @apply text-lg md:text-3xl;
   }
 
-  li {
-    @apply list-inside;
+  ul,
+  ol {
+    @apply pl-10;
   }
 
   ul li {

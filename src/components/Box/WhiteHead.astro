@@ -6,10 +6,10 @@ type Props = BoxProps;
 const { title, class: className, index } = Astro.props;
 ---
 
-<li
+<article
   class:list={[
     className,
-    "list-none rounded-lg overflow-hidden border-[#4E4855] border-2",
+    "rounded-lg overflow-hidden border-[#4E4855] border-2",
   ]}
 >
   {
@@ -23,4 +23,4 @@ const { title, class: className, index } = Astro.props;
     {title && index && <h5 class="text-white text-2xl">{title}</h5>}
     <slot />
   </div>
-</li>
+</article>

@@ -205,7 +205,7 @@ const caixas8: Conteudo[] = [
   <Slide>
     <SlideNumber>Slide 1</SlideNumber>
     <h2>O Desafio</h2>
-    <ul class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       {
         caixas1.map((caixa) => (
           <Box title={caixa.title} class={caixa.className} type={caixa.type}>
@@ -213,14 +213,14 @@ const caixas8: Conteudo[] = [
           </Box>
         ))
       }
-    </ul>
+    </div>
   </Slide>
 
   <Slide>
     <SlideNumber>Slide 2</SlideNumber>
     <h2>Por que o Astro é tão Ágil?</h2>
 
-    <ul class="space-y-5 text-2xl list-disc pl-10">
+    <ul class="space-y-5 text-2xl pl-10">
       <li>
         <strong>Filosofia "Zero JavaScript":</strong> O Astro remove todo o código
         pesado e envia apenas HTML puro para o navegador.
@@ -239,7 +239,7 @@ const caixas8: Conteudo[] = [
   <Slide>
     <SlideNumber>Slide 3</SlideNumber>
     <h2>SEO: O Melhor Amigo do Google</h2>
-    <ul class="grid grid-cols-1 md:grid-cols-3 gap-5">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
       {
         caixas3.map((caixa) => (
           <Box title={caixa.title} class={caixa.className} type={WhiteHead}>
@@ -247,7 +247,7 @@ const caixas8: Conteudo[] = [
           </Box>
         ))
       }
-    </ul>
+    </div>
   </Slide>
 
   <Slide>
@@ -255,7 +255,7 @@ const caixas8: Conteudo[] = [
 
     <h2>Versatilidade: Use o Melhor de Cada Mundo</h2>
 
-    <ul class="grid grid-cols-1 md:grid-cols-3 gap-5">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
       {
         caixas4.map((caixa, index) => (
           <Box
@@ -268,7 +268,7 @@ const caixas8: Conteudo[] = [
           </Box>
         ))
       }
-    </ul>
+    </div>
   </Slide>
 
   <Slide
@@ -279,7 +279,7 @@ const caixas8: Conteudo[] = [
     <SlideNumber>Slide 5</SlideNumber>
     <h2>Roteamento Inteligente</h2>
     <h5 id="5">(Baseado em Arquivos)</h5>
-    <ul class="grid grid-cols-1 gap-5">
+    <div class="grid grid-cols-1 gap-5">
       {
         caixas5.map((caixa, index) => (
           <Box
@@ -292,13 +292,13 @@ const caixas8: Conteudo[] = [
           </Box>
         ))
       }
-    </ul>
+    </div>
   </Slide>
 
   <Slide>
     <SlideNumber>Slide 6</SlideNumber>
     <h2>O Segredo: Arquitetura de Ilhas (Islands)</h2>
-    <ul
+    <div
       class="grid grid-cols-1 grid-rows-1 md:grid-cols-2 md:grid-rows-2 md:grid-flow-col gap-5 justify-center items-center"
     >
       {
@@ -308,13 +308,13 @@ const caixas8: Conteudo[] = [
           </Box>
         ))
       }
-    </ul>
+    </div>
   </Slide>
 
   <Slide>
     <SlideNumber>Slide 7</SlideNumber>
     <h2>Criação de Páginas Estáticas (Build)</h2>
-    <ul class="grid grid-cols-1 md:grid-cols-3 gap-5">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
       {
         caixas7.map((caixa) => (
           <Box title={caixa.title} class={caixa.className} type={Naked}>
@@ -322,7 +322,7 @@ const caixas8: Conteudo[] = [
           </Box>
         ))
       }
-    </ul>
+    </div>
   </Slide>
 
   <Slide>
@@ -333,7 +333,7 @@ const caixas8: Conteudo[] = [
       exige manutenção constante, por um veículo de corrida moderno, leve e
       totalmente personalizado.
     </p>
-    <ul class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
       {
         caixas8.map((caixa, index) => (
           <Box
@@ -345,7 +345,7 @@ const caixas8: Conteudo[] = [
           </Box>
         ))
       }
-    </ul>
+    </div>
     <table>
       <colgroup>
         <col class="w-1/4" />
@@ -394,7 +394,7 @@ const caixas8: Conteudo[] = [
   <Slide>
     <SlideNumber>Perguntas Frequentes</SlideNumber>
     <h2>Desvendando o Astro: FAQ</h2>
-    <ul class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
       {
         caixasFAQ.map((caixa, index) => (
           <Box title={caixa.title} index={`${++index}`} type={WhiteHead}>
@@ -402,6 +402,6 @@ const caixas8: Conteudo[] = [
           </Box>
         ))
       }
-    </ul>
+    </div>
   </Slide>
 </Layout>
