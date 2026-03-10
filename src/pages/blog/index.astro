@@ -11,8 +11,8 @@ const posts = (await getCollection("blog")).sort(
 <Layout title="Blog" description="Um blog que mostra o poder do Astro nativo!">
   <h1>Blog</h1>
   <section>
-    <ul class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
       {posts.map((post) => <PostItem post={post} />)}
-    </ul>
+    </div>
   </section>
 </Layout>

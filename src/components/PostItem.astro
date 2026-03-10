@@ -5,7 +5,7 @@ import Image from "astro/components/Image.astro";
 const { post } = Astro.props;
 ---
 
-<li
+<article
   class="group transition-all duration-400 hover:scale-102 list-none hover:bg-zinc-900 rounded-xl"
 >
   <a href={`/blog/${post.id}/`}>
@@ -29,4 +29,4 @@ const { post } = Astro.props;
       </p>
     </div>
   </a>
-</li>
+</article>
