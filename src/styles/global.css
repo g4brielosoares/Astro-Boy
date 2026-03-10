@@ -83,7 +83,7 @@
 }
 
 table {
-  @apply rounded-md overflow-hidden outline-[#4E4855] outline-2;
+  @apply w-full;
 }
 
 td,
