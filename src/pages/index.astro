@@ -37,7 +37,7 @@ interface Content {
         ))
       }
     </div>
-    <Accordion variant="bottom">
+    <Accordion variant="rounded">
       <AccordionItem title="O que é o Astro?">
         <p>O Astro é um framework web focado em conteúdo e performance.</p>
       </AccordionItem>
@@ -46,7 +46,7 @@ interface Content {
         <p class="mb-2">Sim! Veja este componente sendo injetado:</p>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
           {
-            (SlidesData.Slide1 as Content[]).map((caixa) => (
+            (SlidesData.Slide3 as Content[]).map((caixa) => (
               <Box
                 title={caixa.title}
                 class={caixa.className}
