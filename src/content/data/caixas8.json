@@ -1,0 +1,26 @@
+[
+    {
+        "title": "Performance \"Extrema\" (O fim da lentidão)",
+        "content": "<ul><li><strong>WordPress:</strong> Carrega banco de dados e dezenas de plugins, gerando atraso no carregamento.</li><li><strong>Astro:</strong> Entrega apenas HTML puro, site nasce \"leve como uma pena\". Google recompensa com melhores posições.</li></ul>"
+    },
+    {
+        "title": "Segurança Blindada",
+        "content": "<ul><li><strong>WordPress:</strong> Alvo nº 1 de hackers devido ao banco de dados exposto. Exige plugins e atualizações constantes.</li><li><strong>Astro:</strong> Sem banco de dados exposto ou \"área de login\" vulnerável. Virtualmente impossível de invadir por técnicas comuns.</li></ul>"
+    },
+    {
+        "title": "Componentização: O Lego da Web",
+        "content": "<ul><li><strong>WordPress:</strong> Preso ao que o \"Tema\" permite. Personalização limitada.</li><li><strong>Astro:</strong> Componentes reutilizáveis para personalização sem limites. Altere um componente e atualize todo o site em segundos.</li></ul>"
+    },
+    {
+        "title": "Amizade Total com a Inteligência Artificial",
+        "content": "<ul><li><strong>WordPress:</strong> Código \"macarrônico\" dificulta a atuação da IA.</li><li><strong>Astro:</strong> Código limpo e modular. IAs (ChatGPT, Copilot) auxiliam na criação e correção de bugs, acelerando o desenvolvimento em até 5x.</li></ul>"
+    },
+    {
+        "title": "Liberdade de Ferramentas (Multiframework)",
+        "content": "<ul><li><strong>WordPress:</strong> Preso ao PHP.</li><li><strong>Astro:</strong> Use React, Vue, Svelte e outras tecnologias juntas no mesmo projeto. Uma caixa de ferramentas onde tudo se encaixa.</li></ul>"
+    },
+    {
+        "title": "Custo de Manutenção e Hospedagem",
+        "content": "<ul><li><strong>WordPress:</strong> Servidores caros e otimizados. Risco de \"Taxa de Quebra\" por plugins.</li><li><strong>Astro:</strong> Hospedagem gratuita ou irrisória em redes globais (Edge Computing). Build verificado antes de ir ao ar, sem quebras inesperadas.</li></ul>"
+    }
+]

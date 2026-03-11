@@ -1,11 +1,15 @@
 ---
+import { Image } from "astro:assets";
+import SlideIndicator from "./SlideIndicator.astro";
+
 interface Props {
-  src?: string;
+  title?: string;
+  imageSRC?: string;
   imgSide?: "left" | "right";
-  class?: string;
+  indicatorText?: string;
 }
 
-const { src, imgSide = "right", class: className } = Astro.props;
+const { title, imageSRC, imgSide = "right", indicatorText } = Astro.props;
 
 const isLeft = imgSide === "left" && true;
 ---
@@ -16,22 +20,27 @@ const isLeft = imgSide === "left" && true;
   <div
     class:list={[
       "p-6 md:py-10 md:px-12 flex flex-col gap-6 max-w-full",
-      { "max-md:mb-120 md:w-1/2": src },
+      { "max-md:mb-120 md:w-1/2": imageSRC },
       isLeft ? "md:ml-auto" : "md:mr-auto",
     ]}
   >
+    <SlideIndicator>{indicatorText}</SlideIndicator>
+    <h2>{title}</h2>
     <slot />
     {
-      src && (
+      imageSRC && (
         <div
           class:list={[
             "absolute md:top-0 bottom-0 w-full h-120 md:h-full md:w-1/2",
             isLeft ? "left-0" : "right-0",
           ]}
         >
-          <img
-            width="300"
-            {src}
+          <Image
+            width="1"
+            height="1"
+            loading="lazy"
+            decoding="async"
+            src={imageSRC}
             alt=""
             class="object-cover object-center h-full w-full"
           />

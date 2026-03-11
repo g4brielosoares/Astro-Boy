@@ -1,0 +1,14 @@
+[
+    {
+        "title": "Liberdade Total",
+        "content": "Você não precisa escolher entre React, Vue ou Svelte. O Astro permite usar todos eles no mesmo projeto."
+    },
+    {
+        "title": "Design com Tailwind",
+        "content": "Integração nativa com Tailwind CSS para criar visuais modernos e responsivos em tempo recorde."
+    },
+    {
+        "title": "Sem Barreiras",
+        "content": "Se sua equipe já conhece uma ferramenta, ela já sabe usar Astro."
+    }
+]

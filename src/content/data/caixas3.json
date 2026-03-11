@@ -1,0 +1,14 @@
+[
+    {
+        "title": "Conteúdo Visível",
+        "content": "Como o Astro gera páginas estáticas, os robôs de busca (Google) leem todo o seu conteúdo instantaneamente."
+    },
+    {
+        "title": "Core Web Vitals",
+        "content": "O Astro é otimizado nativamente para passar em todos os testes de qualidade do Google."
+    },
+    {
+        "title": "URLs Canônicas e Metadados",
+        "content": "Gerenciamento simplificado para garantir que sua marca apareça no topo das buscas."
+    }
+]

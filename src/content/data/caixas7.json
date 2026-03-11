@@ -1,0 +1,14 @@
+[
+    {
+        "title": "Pre-rendering",
+        "content": "No momento de publicar, o Astro transforma todo o seu projeto em arquivos HTML, CSS e imagens simples."
+    },
+    {
+        "title": "Segurança",
+        "content": "Sites estáticos são muito mais difíceis de serem invadidos, pois não possuem banco de dados exposto."
+    },
+    {
+        "title": "Hospedagem Barata",
+        "content": "Podem ser hospedados em qualquer lugar (Vercel, Netlify, Cloudflare) por um custo quase zero."
+    }
+]
