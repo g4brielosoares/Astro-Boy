@@ -10,9 +10,17 @@ const posts = (await getCollection("blog")).sort(
 
 <Layout title="Blog" description="Um blog que mostra o poder do Astro nativo!">
   <h1>Blog</h1>
-  <section>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-      {posts.map((post) => <PostItem post={post} />)}
-    </div>
+  <section class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    {
+      posts.map((post) => (
+        <PostItem
+          client:load
+          title={post.data.title}
+          slug={`/blog/${post.id}/`}
+          cover={post.data.heroImage?.src}
+          pubDate={post.data.pubDate}
+        />
+      ))
+    }
   </section>
 </Layout>

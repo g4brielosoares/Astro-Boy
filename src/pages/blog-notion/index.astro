@@ -1,0 +1,30 @@
+---
+export const prerender = false;
+
+import PostItem from "../../components/PostItem.astro";
+import Layout from "../../layouts/Layout.astro";
+
+import { getPublishedPosts } from "../../lib/notion/service";
+
+const posts = await getPublishedPosts();
+---
+
+<Layout
+  title="Notion Blog"
+  description="Um blog que mostra o poder do Astro integrado ao Notion!"
+>
+  <h1>Blog</h1>
+
+  <section class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    {
+      posts.map((post) => (
+        <PostItem
+          title={post.title}
+          cover={post.cover}
+          slug={`/blog-notion/${post.slug}/`}
+          pubDate={new Date(post.publishedAt)}
+        />
+      ))
+    }
+  </section>
+</Layout>

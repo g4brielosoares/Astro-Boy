@@ -262,5 +262,3 @@ O “peso” e a complexidade do projeto caem muito, o que também melhora backu
 - Mais previsibilidade (Git, CI/CD, ambientes)
 - Mais escalável para equipes e múltiplos projetos (componentes)
 - Melhor performance como padrão (static-first + ilhas)
-
----

@@ -1,44 +1,79 @@
 ---
 import "../styles/post.css";
 
-import { Image } from "astro:assets";
-import type { CollectionEntry } from "astro:content";
-
-import FormattedDate from "../components/FormattedDate.astro";
 import Layout from "./Layout.astro";
+import FormattedDate from "../components/FormattedDate.astro";
 
-type Props = CollectionEntry<"blog">["data"];
+type Props = {
+  title: string;
+  description?: string;
+  publishedAt?: Date;
+  lastEditedAt?: Date;
+  cover?: string;
+  author?: string;
+  tags?: string[];
+  id?: string;
+};
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const {
+  title,
+  description,
+  publishedAt,
+  lastEditedAt,
+  cover,
+  author,
+  tags = [],
+} = Astro.props;
 ---
 
 <Layout {title} {description}>
   <article class="space-y-4 md:space-y-6 max-w-250 m-auto">
-    <figure>
-      {
-        heroImage && (
-          <Image
-            width={1020}
-            height={510}
-            src={heroImage}
-            alt="Imagem Destaque"
+    {
+      cover && (
+        <figure>
+          <img
+            src={cover}
+            alt={title}
+            class="w-full aspect-video object-cover object-top rounded-xl block"
           />
-        )
-      }
-    </figure>
-    <div class="text-center flex flex-col">
-      <span>
-        Criado em <FormattedDate date={pubDate} />
-      </span>
+        </figure>
+      )
+    }
+
+    <div class="text-center flex flex-col gap-1">
       {
-        updatedDate && (
+        publishedAt && (
           <span>
-            Atualizado em <FormattedDate date={updatedDate} />
+            Criado em <FormattedDate date={publishedAt} />
           </span>
         )
       }
+
+      {
+        lastEditedAt && (
+          <span>
+            Atualizado em <FormattedDate date={lastEditedAt} />
+          </span>
+        )
+      }
+
+      {author && <span>Por {author}</span>}
     </div>
+
     <h1 class="text-center">{title}</h1>
+
+    {
+      tags.length > 0 && (
+        <div class="flex flex-wrap justify-center gap-2">
+          {tags.map((tag) => (
+            <span class="px-3 py-1 rounded-full text-sm border-2 bg-white/10 border-white/20">
+              {tag}
+            </span>
+          ))}
+        </div>
+      )
+    }
+
     <slot />
   </article>
 </Layout>

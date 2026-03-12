@@ -1,0 +1,30 @@
+---
+export const prerender = false;
+
+import BLogPost from "../../layouts/BlogPost.astro";
+import RenderNodes from "../../components/notion/RenderNodes.astro";
+import { getPostWithContent } from "../../lib/notion/service";
+import { mapBlocksToRenderTree } from "../../lib/notion/render.mapper";
+
+const { slug } = Astro.params;
+const post = slug ? await getPostWithContent(slug) : null;
+
+if (!post) {
+  return Astro.redirect("/404");
+}
+
+const content = mapBlocksToRenderTree(post.blocks);
+---
+
+<BLogPost
+  title={post.title}
+  description=""
+  publishedAt={new Date(post.publishedAt)}
+  lastEditedAt={new Date(post.lastEditedAt)}
+  cover={post.cover}
+  author={post.author}
+  tags={post.tags}
+  id={post.id}
+>
+  <RenderNodes nodes={content} />
+</BLogPost>
