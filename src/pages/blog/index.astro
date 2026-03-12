@@ -14,7 +14,6 @@ const posts = (await getCollection("blog")).sort(
     {
       posts.map((post) => (
         <PostItem
-          client:load
           title={post.data.title}
           slug={`/blog/${post.id}/`}
           cover={post.data.heroImage?.src}
