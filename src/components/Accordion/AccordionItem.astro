@@ -11,7 +11,7 @@ const { title, className } = Astro.props;
   class:list={[
     "group-data-[variant=bottom]/root:not-last:border-b-2",
     "group-data-[variant=rounded]/root:not-last:mb-3 group-data-[variant=rounded]/root:border-2 group-data-[variant=rounded]/root:rounded-lg",
-    "accordion-item border-[#4E4855] overflow-hidden group/item",
+    "accordion-item border-[#4E4855] data-[state=open]:border-white overflow-hidden transition-colors duration-300 group/item",
     className,
   ]}
   data-state="closed"
