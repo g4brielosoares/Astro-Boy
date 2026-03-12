@@ -35,7 +35,7 @@ function textToHtml(parts: any[] = []) {
   node.kind === "bulleted-list" && (
     <ul>
       {node.items.map((item: any) => (
-        <RenderNode node={item} />
+        <Astro.self node={item} />
       ))}
     </ul>
   )
@@ -45,7 +45,7 @@ function textToHtml(parts: any[] = []) {
   node.kind === "numbered-list" && (
     <ol>
       {node.items.map((item: any) => (
-        <RenderNode node={item} />
+        <Astro.self node={item} />
       ))}
     </ol>
   )
