@@ -4,8 +4,10 @@ import Slide from "../components/Slide.astro";
 import Layout from "../layouts/Layout.astro";
 import Accordion from "../components/Accordion/index.astro";
 import AccordionItem from "../components/Accordion/AccordionItem.astro";
+import logoG from "../assets/logo-g.svg";
 
 import SlidesData from "../content/data/SlidesData.json";
+import { Image } from "astro:assets";
 
 interface Content {
   title?: string;
@@ -16,7 +18,7 @@ interface Content {
 ---
 
 <Layout>
-  <img width="800" src="/src/assets/logo.svg" alt="astro" class="m-auto" />
+  <Image width="800" src={logoG} alt="astro" class="m-auto" />
 
   <Slide title="O Desafio" indicatorText="Slide 1">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">

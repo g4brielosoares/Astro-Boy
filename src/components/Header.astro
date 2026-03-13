@@ -1,5 +1,7 @@
 ---
 import HeaderLink from "./HeaderLink.astro";
+import logoP from "../assets/logo-p.svg";
+import { Image } from "astro:assets";
 ---
 
 <header class="sticky top-0 w-full p-6 z-999">
@@ -8,7 +10,7 @@ import HeaderLink from "./HeaderLink.astro";
   rounded-full flex items-center justify-between"
   >
     <a href="/">
-      <img width="20" src="/astro-icon-light-gradient.svg" alt="Logo" />
+      <Image width="20" src={logoP} alt="Logo" />
     </a>
     <div class="space-x-6">
       <HeaderLink href="/">Home</HeaderLink>
