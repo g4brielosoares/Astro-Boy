@@ -5,14 +5,15 @@ import sitemap from '@astrojs/sitemap';
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import node from "@astrojs/node";
-import netlify from '@astrojs/netlify';
+
+import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://soareso.com',
   integrations: [mdx(), sitemap()],
   output: "static",
-  adapter: netlify(),
+  adapter: vercel(),
   vite: {
     plugins: [tailwindcss()],
   },
