@@ -4,7 +4,7 @@
 @theme {
   --color-accent: #2337ff;
   --color-accent-dark: #000d8a;
-  --color-black: rgb(15, 18, 25);
+  --color-black: rgb(14, 14, 14);
 
   --font-atkinson: "Atkinson", sans-serif;
   --font-jetbrains: "JetBrains Mono", monospace;
