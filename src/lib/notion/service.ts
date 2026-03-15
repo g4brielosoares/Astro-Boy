@@ -13,8 +13,23 @@ import {
   getTitle,
   getUniqueId,
 } from "./properties";
+import { resolveWithSWR, markStaleByTags } from "./cache";
 
-function mapPostMeta(page: any): BlogPostMeta {
+const NOTION_FILE_URL_MAX_AGE_MS = 50 * 60 * 1000;
+
+function getListTags(scope: "all" | "published") {
+  return ["blog:list", `blog:list:${scope}`];
+}
+
+function getPostTags(post: Pick<BlogPostMeta, "pageId" | "slug">) {
+  return [
+    "blog:post",
+    `page:${post.pageId}`,
+    `slug:${post.slug}`,
+  ];
+}
+
+export function mapPostMeta(page: any): BlogPostMeta {
   const properties = page.properties ?? {};
 
   return {
@@ -43,45 +58,104 @@ async function queryPosts(body: Record<string, unknown>) {
 }
 
 export async function getAllPosts(): Promise<BlogPostMeta[]> {
-  const pages = await queryPosts({
-    sorts: [{ timestamp: "created_time", direction: "descending" }],
-  });
+  return resolveWithSWR("blog:all-posts", {
+    tags: getListTags("all"),
+    maxAgeMs: NOTION_FILE_URL_MAX_AGE_MS,
+    loader: async () => {
+      const pages = await queryPosts({
+        sorts: [{ timestamp: "created_time", direction: "descending" }],
+      });
 
-  return pages.map(mapPostMeta);
+      return pages.map(mapPostMeta);
+    },
+  });
 }
 
 export async function getPublishedPosts(): Promise<BlogPostMeta[]> {
-  const pages = await queryPosts({
-    filter: {
-      property: "Status",
-      status: { equals: "Publicado" },
-    },
-    sorts: [{ timestamp: "created_time", direction: "descending" }],
-  });
+  return resolveWithSWR("blog:published-posts", {
+    tags: getListTags("published"),
+    maxAgeMs: NOTION_FILE_URL_MAX_AGE_MS,
+    loader: async () => {
+      const pages = await queryPosts({
+        filter: {
+          property: "Status",
+          status: { equals: "Publicado" },
+        },
+        sorts: [{ timestamp: "created_time", direction: "descending" }],
+      });
 
-  return pages.map(mapPostMeta);
+      return pages.map(mapPostMeta);
+    },
+  });
 }
 
 export async function getPostBySlug(slug: string): Promise<BlogPostMeta | null> {
-  const pages = await queryPosts({
-    filter: {
-      property: "Slug",
-      rich_text: { equals: slug },
-    },
-    page_size: 1,
-  });
+  return resolveWithSWR(`blog:post-meta:${slug}`, {
+    tags: ["blog:post-meta", `slug:${slug}`],
+    maxAgeMs: NOTION_FILE_URL_MAX_AGE_MS,
+    loader: async () => {
+      const pages = await queryPosts({
+        filter: {
+          property: "Slug",
+          rich_text: { equals: slug },
+        },
+        page_size: 1,
+      });
 
-  return pages[0] ? mapPostMeta(pages[0]) : null;
+      return pages[0] ? mapPostMeta(pages[0]) : null;
+    },
+  });
+}
+
+export async function getPostByPageId(pageId: string): Promise<BlogPostMeta | null> {
+  const page: any = await notion.pages.retrieve({ page_id: pageId });
+
+  if (page?.object !== "page") return null;
+
+  const dataSourceId = page.parent?.data_source_id ?? page.parent?.database_id;
+  if (DATA_SOURCE_ID && dataSourceId && dataSourceId !== DATA_SOURCE_ID) {
+    return null;
+  }
+
+  return mapPostMeta(page);
 }
 
 export async function getPostWithContent(slug: string): Promise<BlogPost | null> {
   const post = await getPostBySlug(slug);
   if (!post) return null;
 
-  const blocks = await getPageBlocksTree(post.pageId);
+  return resolveWithSWR(`blog:post-content:${slug}`, {
+    tags: getPostTags(post),
+    maxAgeMs: NOTION_FILE_URL_MAX_AGE_MS,
+    loader: async () => {
+      const freshPost = await getPostByPageId(post.pageId);
+      if (!freshPost) return null;
 
-  return {
-    ...post,
-    blocks,
-  };
+      const blocks = await getPageBlocksTree(freshPost.pageId);
+
+      return {
+        ...freshPost,
+        blocks,
+      };
+    },
+  });
+}
+
+export async function markPostAndListsStale(pageId: string) {
+  const tags = ["blog:list", "blog:list:all", "blog:list:published", `page:${pageId}`];
+
+  try {
+    const post = await getPostByPageId(pageId);
+    if (post?.slug) {
+      tags.push(`slug:${post.slug}`);
+    }
+  } catch {
+    // Se não conseguir resolver o slug, ainda invalida listas e a tag por pageId.
+  }
+
+  markStaleByTags(tags);
+}
+
+export function markListsStale() {
+  markStaleByTags(["blog:list", "blog:list:all", "blog:list:published"]);
 }
