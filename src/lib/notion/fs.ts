@@ -1,7 +1,12 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-const ROOT = path.join(process.cwd(), "cache", "notion", "cover");
+const isVercel = Boolean(process.env.VERCEL);
+
+const ROOT = isVercel
+  ? path.join("/tmp", "notion", "cover")
+  : path.join(process.cwd(), "cache", "notion", "cover");
+
 const ORIGINAL_DIR = path.join(ROOT, "original");
 const DERIVED_DIR = path.join(ROOT, "derived");
 
