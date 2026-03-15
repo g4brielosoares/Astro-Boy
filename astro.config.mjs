@@ -10,7 +10,7 @@ import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://soareso.com',
+  site: 'https://astro-boy.vercel.app',
   integrations: [mdx(), sitemap()],
   output: "static",
   adapter: vercel(),
