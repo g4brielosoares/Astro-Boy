@@ -35,7 +35,7 @@ const {
       cover && (
         <figure>
           <img
-            src={getOptimizedCoverUrl(pageId)}
+            src={pageId ? getOptimizedCoverUrl(pageId) : cover}
             alt={title}
             class="w-full aspect-video object-cover object-top rounded-xl block"
           />
