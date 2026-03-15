@@ -25,6 +25,17 @@ function getChangedPageId(payload: any) {
   return payload?.entity?.id ?? payload?.data?.id ?? payload?.page?.id ?? null;
 }
 
+// temporário
+export const GET: APIRoute = async () => {
+  return new Response(
+    JSON.stringify({ ok: true, route: "notion-webhook" }),
+    {
+      status: 200,
+      headers: { "content-type": "application/json" },
+    }
+  );
+};
+
 export const POST: APIRoute = async ({ request }) => {
   const rawBody = await request.text();
 
@@ -89,15 +100,4 @@ export const POST: APIRoute = async ({ request }) => {
     status: 200,
     headers: { "content-type": "application/json" },
   });
-};
-
-// temporário
-export const GET: APIRoute = async () => {
-  return new Response(
-    JSON.stringify({ ok: true, route: "notion-webhook" }),
-    {
-      status: 200,
-      headers: { "content-type": "application/json" },
-    }
-  );
 };
