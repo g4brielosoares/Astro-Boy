@@ -2,6 +2,8 @@ import type { APIRoute } from "astro";
 import crypto from "node:crypto";
 import { markListsStale, markPostAndListsStale } from "../../lib/notion/service";
 
+export const prerender = false;
+
 const NOTION_WEBHOOK_SECRET = import.meta.env.NOTION_WEBHOOK_SECRET;
 
 function verifySignature(rawBody: string, signature: string | null) {
