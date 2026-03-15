@@ -37,7 +37,7 @@ const {
           <img
             src={
               pageId
-                ? getOptimizedCoverUrl(pageId, String(lastEditedAt), 1000)
+                ? getOptimizedCoverUrl(pageId, String(lastEditedAt) ?? "", 1000)
                 : cover
             }
             alt={title}

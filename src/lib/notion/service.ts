@@ -42,7 +42,7 @@ export function mapPostMeta(page: any): BlogPostMeta {
     status: getStatus(properties["Status"]),
     tags: getMultiSelect(properties["Tags"]),
     author: getCreatedBy(properties["Author"]),
-    cover: getCover(properties["Capa"]),
+    cover: getCover(page),
     publishedAt: getCreatedTime(properties["Data de publicação"]),
     lastEditedAt: getLastEditedTime(properties["Última edição"]),
     lastEditedBy: getLastEditedBy(properties["Última edição por"]),

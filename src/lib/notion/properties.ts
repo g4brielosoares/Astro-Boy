@@ -48,8 +48,12 @@ export function getFileUrl(file: any): string {
   return "";
 }
 
-export function getCover(prop: any): string {
-  if (prop?.type !== "files") return "";
-  const firstFile = prop.files?.[0];
-  return getFileUrl(firstFile);
+export function getCover(page: any): string {
+  const cover = page?.cover;
+  if (!cover) return "";
+
+  if (cover.type === "file") return cover.file?.url ?? "";
+  if (cover.type === "external") return cover.external?.url ?? "";
+
+  return "";
 }
