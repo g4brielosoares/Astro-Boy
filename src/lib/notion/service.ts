@@ -14,6 +14,7 @@ import {
   getUniqueId,
 } from "./properties";
 import { resolveWithSWR, markStaleByTags } from "./cache";
+import { removeCoverCacheByPageId } from "./cleanup";
 
 const NOTION_FILE_URL_MAX_AGE_MS = 50 * 60 * 1000;
 
@@ -21,11 +22,12 @@ function getListTags(scope: "all" | "published") {
   return ["blog:list", `blog:list:${scope}`];
 }
 
-function getPostTags(post: Pick<BlogPostMeta, "pageId" | "slug">) {
+function getPostTags(post: Pick<BlogPostMeta, "pageId" | "slug" | "id">) {
   return [
     "blog:post",
     `page:${post.pageId}`,
     `slug:${post.slug}`,
+    `post-id:${post.id}`,
   ];
 }
 
@@ -120,6 +122,23 @@ export async function getPostByPageId(pageId: string): Promise<BlogPostMeta | nu
   return mapPostMeta(page);
 }
 
+export async function getPostByPostId(postId: string): Promise<BlogPostMeta | null> {
+  const normalized = postId.trim();
+  if (!normalized) return null;
+
+  const pages = await queryPosts({
+    filter: {
+      property: "ID",
+      unique_id: {
+        equals: Number(normalized.replace(/^[^\d]*/, "")) || 0,
+      },
+    },
+    page_size: 1,
+  });
+
+  return pages[0] ? mapPostMeta(pages[0]) : null;
+}
+
 export async function getPostWithContent(slug: string): Promise<BlogPost | null> {
   const post = await getPostBySlug(slug);
   if (!post) return null;
@@ -142,15 +161,22 @@ export async function getPostWithContent(slug: string): Promise<BlogPost | null>
 }
 
 export async function markPostAndListsStale(pageId: string) {
-  const tags = ["blog:list", "blog:list:all", "blog:list:published", `page:${pageId}`];
+  const tags = [
+    "blog:list",
+    "blog:list:all",
+    "blog:list:published",
+    `page:${pageId}`,
+  ];
 
   try {
     const post = await getPostByPageId(pageId);
-    if (post?.slug) {
-      tags.push(`slug:${post.slug}`);
-    }
-  } catch {
-    // Se não conseguir resolver o slug, ainda invalida listas e a tag por pageId.
+    if (post?.slug) tags.push(`slug:${post.slug}`);
+    if (post?.id) tags.push(`post-id:${post.id}`);
+  } catch (error) {
+    console.warn("Não foi possível resolver slug/id do post para invalidação fina.", {
+      pageId,
+      error,
+    });
   }
 
   markStaleByTags(tags);
@@ -158,4 +184,21 @@ export async function markPostAndListsStale(pageId: string) {
 
 export function markListsStale() {
   markStaleByTags(["blog:list", "blog:list:all", "blog:list:published"]);
+}
+
+export async function purgePostCoverByPageId(pageId: string) {
+  await removeCoverCacheByPageId(pageId);
+}
+
+export async function purgePostCoverByPostId(postId: string) {
+  const post = await getPostByPostId(postId);
+  if (!post) return false;
+
+  await removeCoverCacheByPageId(post.pageId);
+  return true;
+}
+
+export function getOptimizedCoverUrl(pageId: string, width = 1200) {
+  const safeWidth = Number.isFinite(width) && width > 0 ? Math.round(width) : 1200;
+  return `/img/notion/cover/${encodeURIComponent(pageId)}?w=${safeWidth}`;
 }

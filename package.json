@@ -18,7 +18,11 @@
     "@notionhq/client": "^5.12.0",
     "@tailwindcss/vite": "^4.2.1",
     "astro": "^6.0.4",
-    "sharp": "^0.34.3",
+    "sharp": "^0.34.5",
     "tailwindcss": "^4.2.1"
+  },
+  "overrides": {
+    "path-to-regexp": "^6.3.0",
+    "yauzl": "^3.2.1"
   }
 }

@@ -1,6 +1,10 @@
 import type { APIRoute } from "astro";
 import crypto from "node:crypto";
-import { markListsStale, markPostAndListsStale } from "../../lib/notion/service";
+import {
+  markListsStale,
+  markPostAndListsStale,
+  purgePostCoverByPageId,
+} from "../../lib/notion/service";
 
 const NOTION_WEBHOOK_SECRET = import.meta.env.NOTION_WEBHOOK_SECRET;
 
@@ -22,12 +26,7 @@ function verifySignature(rawBody: string, signature: string | null) {
 }
 
 function getChangedPageId(payload: any) {
-  return (
-    payload?.entity?.id ??
-    payload?.data?.id ??
-    payload?.page?.id ??
-    null
-  );
+  return payload?.entity?.id ?? payload?.data?.id ?? payload?.page?.id ?? null;
 }
 
 export const POST: APIRoute = async ({ request }) => {
@@ -52,6 +51,15 @@ export const POST: APIRoute = async ({ request }) => {
   ) {
     if (pageId) {
       await markPostAndListsStale(pageId);
+
+      try {
+        await purgePostCoverByPageId(pageId);
+      } catch (error) {
+        console.warn("Falha ao limpar cover cache após alteração do post.", {
+          pageId,
+          error,
+        });
+      }
     } else {
       markListsStale();
     }

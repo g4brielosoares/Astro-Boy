@@ -23,3 +23,9 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 .vercel
+
+# cache
+cache/notion/cover/original/*
+cache/notion/cover/derived/*
+!cache/notion/cover/original/.gitkeep
+!cache/notion/cover/derived/.gitkeep
