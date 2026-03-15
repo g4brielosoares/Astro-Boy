@@ -15,29 +15,31 @@ export type CoverSource = {
 
 async function getCoverSourceFromPage(pageId: string): Promise<CoverSource> {
   const page: any = await notion.pages.retrieve({ page_id: pageId });
-  const cover = page?.cover;
+  const coverProp = page?.properties?.["Capa"];
 
-  if (!cover) {
-    throw new Error(`Nenhuma cover encontrada para a página ${pageId}.`);
+  if (coverProp?.type !== "files" || !coverProp.files?.length) {
+    throw new Error(`Nenhuma cover encontrada na propriedade "Capa" para a página ${pageId}.`);
   }
 
-  if (cover.type === "external") {
+  const firstFile = coverProp.files[0];
+
+  if (firstFile.type === "external") {
     return {
       type: "external",
-      url: cover.external?.url ?? "",
+      url: firstFile.external?.url ?? "",
       expiryTime: null,
     };
   }
 
-  if (cover.type === "file") {
+  if (firstFile.type === "file") {
     return {
       type: "file",
-      url: cover.file?.url ?? "",
-      expiryTime: cover.file?.expiry_time ?? null,
+      url: firstFile.file?.url ?? "",
+      expiryTime: firstFile.file?.expiry_time ?? null,
     };
   }
 
-  throw new Error(`Tipo de cover não suportado: ${cover.type}`);
+  throw new Error(`Tipo de cover não suportado na propriedade "Capa": ${firstFile.type}`);
 }
 
 export async function ensureOriginalCover(pageId: string) {
