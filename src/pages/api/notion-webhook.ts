@@ -1,6 +1,10 @@
 import type { APIRoute } from "astro";
 import crypto from "node:crypto";
-import { markListsStale, markPostAndListsStale } from "../../lib/notion/service";
+import {
+  markListsStale,
+  markPostAndListsStale,
+  purgePostCoverByPageId,
+} from "../../lib/notion/service";
 
 export const prerender = false;
 
@@ -41,7 +45,6 @@ export const POST: APIRoute = async ({ request }) => {
     });
   }
 
-  // Primeiro POST de verificação do Notion
   if (payload?.verification_token) {
     console.log("NOTION VERIFICATION TOKEN:", payload.verification_token);
 
@@ -76,6 +79,12 @@ export const POST: APIRoute = async ({ request }) => {
   ) {
     if (pageId) {
       await markPostAndListsStale(pageId);
+
+      try {
+        await purgePostCoverByPageId(pageId);
+      } catch (error) {
+        console.warn("Falha ao limpar cache da cover", { pageId, error });
+      }
     } else {
       markListsStale();
     }
