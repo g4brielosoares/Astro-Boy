@@ -40,66 +40,24 @@ export const GET: APIRoute = async () => {
 
 export const POST: APIRoute = async ({ request }) => {
   const rawBody = await request.text();
+  console.log("RAW BODY:", rawBody);
 
-  let payload: any;
-
+  let payload: any = null;
   try {
     payload = JSON.parse(rawBody);
-  } catch {
-    return new Response(JSON.stringify({ ok: false, error: "invalid_json" }), {
-      status: 400,
-      headers: { "content-type": "application/json" },
-    });
-  }
+  } catch {}
 
-  // Etapa inicial do webhook do Notion:
-  // o Notion envia um POST com verification_token para você copiar e colar no painel.
   if (payload?.verification_token) {
     console.log("NOTION VERIFICATION TOKEN:", payload.verification_token);
 
-    return new Response(
-      JSON.stringify({
-        ok: true,
-        receivedVerificationToken: true,
-        verification_token: payload.verification_token,
-      }),
-      {
-        status: 200,
-        headers: { "content-type": "application/json" },
-      }
-    );
-  }
-
-  const signature = request.headers.get("x-notion-signature");
-
-  if (!verifySignature(rawBody, signature)) {
-    return new Response(JSON.stringify({ ok: false, error: "invalid_signature" }), {
-      status: 401,
-      headers: { "content-type": "application/json" },
+    return new Response("verification-token-received", {
+      status: 200,
+      headers: { "content-type": "text/plain; charset=utf-8" },
     });
   }
 
-  const eventType = payload?.type ?? "unknown";
-  const pageId = getChangedPageId(payload);
-
-  if (
-    eventType === "page.created" ||
-    eventType === "page.properties_updated" ||
-    eventType === "page.content_updated"
-  ) {
-    if (pageId) {
-      await markPostAndListsStale(pageId);
-    } else {
-      markListsStale();
-    }
-  }
-
-  if (eventType === "data_source.content_updated") {
-    markListsStale();
-  }
-
-  return new Response(JSON.stringify({ ok: true, eventType, pageId }), {
+  return new Response("ok", {
     status: 200,
-    headers: { "content-type": "application/json" },
+    headers: { "content-type": "text/plain; charset=utf-8" },
   });
 };
