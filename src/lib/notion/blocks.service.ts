@@ -1,34 +1,30 @@
 import { notion } from "./client";
-import type { NotionBlock } from "./types";
 
-async function fetchBlockChildren(blockId: string, startCursor?: string) {
-  return notion.blocks.children.list({
-    block_id: blockId,
-    start_cursor: startCursor,
-    page_size: 100,
-  });
-}
+type ExtraBlockMeta = {
+  __pageId?: string;
+  __version?: string;
+};
 
-export async function getPageBlocksTree(blockId: string): Promise<NotionBlock[]> {
-  const blocks: NotionBlock[] = [];
-  let cursor: string | undefined = undefined;
+export async function getPageBlocksTree(
+  pageId: string,
+  extraMeta?: ExtraBlockMeta
+): Promise<any[]> {
+  const blocks = await notion.blocks.children.list({ block_id: pageId });
 
-  while (true) {
-    const response: any = await fetchBlockChildren(blockId, cursor);
-
-    for (const block of response.results ?? []) {
-      const hydrated: NotionBlock = { ...block };
+  const results = await Promise.all(
+    blocks.results.map(async (block: any) => {
+      const enrichedBlock: any = {
+        ...block,
+        ...extraMeta,
+      };
 
       if (block.has_children) {
-        hydrated.children = await getPageBlocksTree(block.id);
+        enrichedBlock.children = await getPageBlocksTree(block.id, extraMeta);
       }
 
-      blocks.push(hydrated);
-    }
+      return enrichedBlock;
+    })
+  );
 
-    if (!response.has_more) break;
-    cursor = response.next_cursor ?? undefined;
-  }
-
-  return blocks;
+  return results;
 }

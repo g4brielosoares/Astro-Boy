@@ -1,5 +1,5 @@
 import sharp from "sharp";
-import { ensureImageCacheDirs, fileExists, getDerivedPath } from "./fs";
+import { ensureImageCacheDirs, fileExists, getCoverDerivedPath } from "./fs";
 
 export type CoverImageFormat = "webp";
 
@@ -12,7 +12,7 @@ export async function ensureDerivedCover(
 ) {
   await ensureImageCacheDirs();
 
-  const outPath = getDerivedPath(pageId, version, width, format);
+  const outPath = getCoverDerivedPath(pageId, version, width, format);
   if (await fileExists(outPath)) {
     return outPath;
   }

@@ -19,13 +19,51 @@ function mapChildren(children: NotionBlock[] = []): RenderNode[] {
   return mapBlocksToRenderTree(children);
 }
 
+function getBlockProxyUrl(block: NotionBlock, width = 1200) {
+  const pageId = block?.__pageId;
+  const version = block?.__version || "default";
+  const blockId = block?.id;
+
+  if (!pageId || !blockId) return "";
+
+  const params = new URLSearchParams({
+    v: String(version),
+  });
+
+  if (block.type === "image") {
+    params.set("w", String(width));
+  }
+
+  return `/img/notion/block/${encodeURIComponent(pageId)}/${encodeURIComponent(
+    blockId
+  )}?${params.toString()}`;
+}
+
+function getBlockAssetUrl(block: NotionBlock, data: any, width = 1200) {
+  const proxiedTypes = new Set(["image", "video", "file", "pdf"]);
+
+  if (proxiedTypes.has(block.type)) {
+    const proxyUrl = getBlockProxyUrl(block, width);
+    if (proxyUrl) return proxyUrl;
+  }
+
+  return getFileUrl(data);
+}
+
 function mapListItem(block: NotionBlock): RenderNode {
   const data = block[block.type] ?? {};
   return {
     kind: "list-item",
     text: mapRichText(data.rich_text),
-    children: mapChildren(block.children),
+    children: block.children?.length ? mapChildren(block.children) : undefined,
   };
+}
+
+function mapTableRows(children: NotionBlock[] = []): RenderText[][][] {
+  return children.map((row: any) => {
+    const cells = row?.table_row?.cells ?? [];
+    return cells.map((cell: any[]) => mapRichText(cell));
+  });
 }
 
 function mapSingleBlock(block: NotionBlock): RenderNode {
@@ -34,22 +72,39 @@ function mapSingleBlock(block: NotionBlock): RenderNode {
 
   switch (type) {
     case "paragraph":
-      return { kind: "paragraph", text: mapRichText(data.rich_text) };
+      return {
+        kind: "paragraph",
+        text: mapRichText(data.rich_text),
+      };
 
     case "heading_1":
-      return { kind: "heading-1", text: mapRichText(data.rich_text) };
+      return {
+        kind: "heading-1",
+        text: mapRichText(data.rich_text),
+      };
 
     case "heading_2":
-      return { kind: "heading-2", text: mapRichText(data.rich_text) };
+      return {
+        kind: "heading-2",
+        text: mapRichText(data.rich_text),
+      };
 
     case "heading_3":
-      return { kind: "heading-3", text: mapRichText(data.rich_text) };
+      return {
+        kind: "heading-3",
+        text: mapRichText(data.rich_text),
+      };
 
     case "quote":
-      return { kind: "quote", text: mapRichText(data.rich_text) };
+      return {
+        kind: "quote",
+        text: mapRichText(data.rich_text),
+      };
 
     case "divider":
-      return { kind: "divider" };
+      return {
+        kind: "divider",
+      };
 
     case "bulleted_list_item":
     case "numbered_list_item":
@@ -60,14 +115,14 @@ function mapSingleBlock(block: NotionBlock): RenderNode {
         kind: "todo",
         text: mapRichText(data.rich_text),
         checked: data.checked ?? false,
-        children: mapChildren(block.children),
+        children: block.children?.length ? mapChildren(block.children) : undefined,
       };
 
     case "toggle":
       return {
         kind: "toggle",
         text: mapRichText(data.rich_text),
-        children: mapChildren(block.children),
+        children: block.children?.length ? mapChildren(block.children) : undefined,
       };
 
     case "callout":
@@ -78,55 +133,69 @@ function mapSingleBlock(block: NotionBlock): RenderNode {
           data.icon?.type === "emoji"
             ? data.icon.emoji
             : getFileUrl(data.icon),
-        children: mapChildren(block.children),
+        children: block.children?.length ? mapChildren(block.children) : undefined,
       };
 
     case "code":
       return {
         kind: "code",
-        code: (data.rich_text ?? []).map((item: any) => item.plain_text ?? "").join(""),
+        code: (data.rich_text ?? [])
+          .map((item: any) => item.plain_text ?? "")
+          .join(""),
         language: data.language ?? "",
       };
 
     case "image":
       return {
         kind: "image",
-        src: getFileUrl(data),
-        caption: mapRichText(data.caption),
+        src: getBlockAssetUrl(block, data, 1200),
+        caption: data.caption?.length ? mapRichText(data.caption) : undefined,
       };
 
     case "video":
       return {
         kind: "video",
-        src: getFileUrl(data),
-        caption: mapRichText(data.caption),
+        src: getBlockAssetUrl(block, data),
+        caption: data.caption?.length ? mapRichText(data.caption) : undefined,
       };
 
     case "embed":
-      return { kind: "embed", url: data.url ?? "" };
+      return {
+        kind: "embed",
+        url: data.url ?? "",
+      };
 
     case "bookmark":
     case "link_preview":
-      return { kind: "bookmark", url: data.url ?? "" };
+      return {
+        kind: "bookmark",
+        url: data.url ?? "",
+      };
 
     case "file":
       return {
         kind: "file",
-        url: getFileUrl(data),
-        label: "Baixar arquivo",
+        url: getBlockAssetUrl(block, data),
+        label: data.name ?? "Baixar arquivo",
       };
 
     case "pdf":
-      return { kind: "pdf", url: getFileUrl(data) };
+      return {
+        kind: "pdf",
+        url: getBlockAssetUrl(block, data),
+      };
 
     case "table":
       return {
         kind: "table",
-        rows: (block.children ?? []).map((row: any) => row.table_row?.cells ?? []),
+        rows: mapTableRows(block.children ?? []),
       };
 
     default:
-      return { kind: "unsupported", blockType: type };
+      return {
+        kind: "unsupported",
+        blockType: type,
+      };
   }
 }
 
@@ -139,21 +208,31 @@ export function mapBlocksToRenderTree(blocks: NotionBlock[]): RenderNode[] {
 
     if (block.type === "bulleted_list_item") {
       const items: RenderNode[] = [];
+
       while (i < blocks.length && blocks[i].type === "bulleted_list_item") {
         items.push(mapSingleBlock(blocks[i]));
         i++;
       }
-      result.push({ kind: "bulleted-list", items });
+
+      result.push({
+        kind: "bulleted-list",
+        items,
+      });
       continue;
     }
 
     if (block.type === "numbered_list_item") {
       const items: RenderNode[] = [];
+
       while (i < blocks.length && blocks[i].type === "numbered_list_item") {
         items.push(mapSingleBlock(blocks[i]));
         i++;
       }
-      result.push({ kind: "numbered-list", items });
+
+      result.push({
+        kind: "numbered-list",
+        items,
+      });
       continue;
     }
 

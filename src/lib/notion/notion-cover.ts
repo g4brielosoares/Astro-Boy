@@ -3,19 +3,14 @@ import { notion } from "./client";
 import {
   ensureImageCacheDirs,
   fileExists,
-  getOriginalMetaPath,
-  getOriginalPath,
+  getCoverOriginalMetaPath,
+  getCoverOriginalPath,
 } from "./fs";
 
 export type CoverSource = {
   type: "external" | "file";
   url: string;
   expiryTime?: string | null;
-};
-
-export type CoverVersionData = {
-  version: string;
-  lastEditedAt?: string;
 };
 
 async function getCoverSourceFromPage(pageId: string): Promise<CoverSource> {
@@ -48,14 +43,15 @@ async function getCoverSourceFromPage(pageId: string): Promise<CoverSource> {
 export async function ensureOriginalCover(pageId: string, version: string) {
   await ensureImageCacheDirs();
 
-  const filePath = getOriginalPath(pageId, version);
-  const metaPath = getOriginalMetaPath(pageId, version);
+  const filePath = getCoverOriginalPath(pageId, version);
+  const metaPath = getCoverOriginalMetaPath(pageId, version);
 
   if (await fileExists(filePath)) {
     return { filePath, metaPath };
   }
 
   const source = await getCoverSourceFromPage(pageId);
+
   if (!source.url) {
     throw new Error(`A cover da página ${pageId} não possui URL válida.`);
   }

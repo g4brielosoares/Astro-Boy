@@ -2,7 +2,6 @@ import { notion, DATA_SOURCE_ID } from "./client";
 import type { BlogPostMeta, BlogPost } from "./types";
 import { getPageBlocksTree } from "./blocks.service";
 import {
-  getCover,
   getCreatedBy,
   getCreatedTime,
   getLastEditedBy,
@@ -14,7 +13,7 @@ import {
   getUniqueId,
 } from "./properties";
 import { resolveWithSWR, markStaleByTags, setCache } from "./cache";
-import { removeCoverCacheByPageId } from "./cleanup";
+import { removeBlockAssetsCacheByPageId, removeCoverCacheByPageId } from "./cleanup";
 
 const NOTION_FILE_URL_MAX_AGE_MS = 50 * 60 * 1000;
 
@@ -23,12 +22,7 @@ function getListTags(scope: "all" | "published") {
 }
 
 function getPostTags(post: Pick<BlogPostMeta, "pageId" | "slug" | "id">) {
-  return [
-    "blog:post",
-    `page:${post.pageId}`,
-    `slug:${post.slug}`,
-    `post-id:${post.id}`,
-  ];
+  return ["blog:post", `page:${post.pageId}`, `slug:${post.slug}`, `post-id:${post.id}`];
 }
 
 function getPostMetaKey(slug: string) {
@@ -45,6 +39,17 @@ function getAllPostsKey() {
 
 function getPublishedPostsKey() {
   return "blog:published-posts";
+}
+
+function getCover(page: any): string {
+  const cover = page?.cover;
+
+  if (!cover) return "";
+
+  if (cover.type === "external") return cover.external?.url ?? "";
+  if (cover.type === "file") return cover.file?.url ?? "";
+
+  return "";
 }
 
 export function mapPostMeta(page: any): BlogPostMeta {
@@ -124,7 +129,11 @@ async function fetchFreshPostWithContentByPageId(pageId: string): Promise<BlogPo
   const freshPost = await fetchFreshPostMetaByPageId(pageId);
   if (!freshPost) return null;
 
-  const blocks = await getPageBlocksTree(freshPost.pageId);
+  const version = String(freshPost.lastEditedAt || "default");
+  const blocks = await getPageBlocksTree(freshPost.pageId, {
+    __pageId: freshPost.pageId,
+    __version: version,
+  });
 
   return {
     ...freshPost,
@@ -189,12 +198,7 @@ export async function getPostWithContent(slug: string): Promise<BlogPost | null>
 }
 
 export async function markPostAndListsStale(pageId: string) {
-  const tags = [
-    "blog:list",
-    "blog:list:all",
-    "blog:list:published",
-    `page:${pageId}`,
-  ];
+  const tags = ["blog:list", "blog:list:all", "blog:list:published", `page:${pageId}`];
 
   try {
     const post = await getPostByPageId(pageId);
@@ -214,15 +218,15 @@ export function markListsStale() {
   markStaleByTags(["blog:list", "blog:list:all", "blog:list:published"]);
 }
 
-export async function purgePostCoverByPageId(pageId: string) {
-  await removeCoverCacheByPageId(pageId);
+export async function purgePostAssetsByPageId(pageId: string) {
+  await Promise.all([removeCoverCacheByPageId(pageId), removeBlockAssetsCacheByPageId(pageId)]);
 }
 
-export async function purgePostCoverByPostId(postId: string) {
+export async function purgePostAssetsByPostId(postId: string) {
   const post = await getPostByPostId(postId);
   if (!post) return false;
 
-  await removeCoverCacheByPageId(post.pageId);
+  await purgePostAssetsByPageId(post.pageId);
   return true;
 }
 
@@ -280,5 +284,5 @@ export function getOptimizedCoverUrl(
     v: version,
   });
 
-  return `/img/notion/cover/${encodeURIComponent(pageId)}?${params.toString()}`;
+  return `/media/notion/cover/${encodeURIComponent(pageId)}?${params.toString()}`;
 }
