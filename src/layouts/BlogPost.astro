@@ -48,22 +48,23 @@ const {
       )
     }
 
-    <div class="text-center flex flex-col gap-1">
-      {
-        publishedAt && (
-          <span>
-            Criado em <FormattedDate date={publishedAt} />
-          </span>
-        )
-      }
-
-      {
-        lastEditedAt && (
-          <span>
-            Atualizado em <FormattedDate date={lastEditedAt} />
-          </span>
-        )
-      }
+    <div class="flex flex-col md:flex-row gap-1 md:justify-between">
+      <div class="flex flex-col gap-1">
+        {
+          publishedAt && (
+            <span>
+              Criado em <FormattedDate date={publishedAt} />
+            </span>
+          )
+        }
+        {
+          lastEditedAt && (
+            <span>
+              Atualizado em <FormattedDate date={lastEditedAt} />
+            </span>
+          )
+        }
+      </div>
 
       {author && <span>Por {author}</span>}
     </div>
