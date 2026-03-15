@@ -4,6 +4,7 @@ import {
   markListsStale,
   markPostAndListsStale,
   purgePostCoverByPageId,
+  warmPostCacheByPageId,
 } from "../../lib/notion/service";
 
 export const prerender = false;
@@ -84,6 +85,12 @@ export const POST: APIRoute = async ({ request }) => {
         await purgePostCoverByPageId(pageId);
       } catch (error) {
         console.warn("Falha ao limpar cache da cover", { pageId, error });
+      }
+
+      try {
+        await warmPostCacheByPageId(pageId);
+      } catch (error) {
+        console.warn("Falha ao aquecer cache do post", { pageId, error });
       }
     } else {
       markListsStale();

@@ -13,7 +13,7 @@ import {
   getTitle,
   getUniqueId,
 } from "./properties";
-import { resolveWithSWR, markStaleByTags } from "./cache";
+import { resolveWithSWR, markStaleByTags, setCache } from "./cache";
 import { removeCoverCacheByPageId } from "./cleanup";
 
 const NOTION_FILE_URL_MAX_AGE_MS = 50 * 60 * 1000;
@@ -29,6 +29,22 @@ function getPostTags(post: Pick<BlogPostMeta, "pageId" | "slug" | "id">) {
     `slug:${post.slug}`,
     `post-id:${post.id}`,
   ];
+}
+
+function getPostMetaKey(slug: string) {
+  return `blog:post-meta:${slug}`;
+}
+
+function getPostContentKey(slug: string) {
+  return `blog:post-content:${slug}`;
+}
+
+function getAllPostsKey() {
+  return "blog:all-posts";
+}
+
+function getPublishedPostsKey() {
+  return "blog:published-posts";
 }
 
 export function mapPostMeta(page: any): BlogPostMeta {
@@ -59,57 +75,39 @@ async function queryPosts(body: Record<string, unknown>) {
   return response.results ?? [];
 }
 
-export async function getAllPosts(): Promise<BlogPostMeta[]> {
-  return resolveWithSWR("blog:all-posts", {
-    tags: getListTags("all"),
-    maxAgeMs: NOTION_FILE_URL_MAX_AGE_MS,
-    loader: async () => {
-      const pages = await queryPosts({
-        sorts: [{ timestamp: "created_time", direction: "descending" }],
-      });
-
-      return pages.map(mapPostMeta);
-    },
+async function fetchFreshAllPosts(): Promise<BlogPostMeta[]> {
+  const pages = await queryPosts({
+    sorts: [{ timestamp: "created_time", direction: "descending" }],
   });
+
+  return pages.map(mapPostMeta);
 }
 
-export async function getPublishedPosts(): Promise<BlogPostMeta[]> {
-  return resolveWithSWR("blog:published-posts", {
-    tags: getListTags("published"),
-    maxAgeMs: NOTION_FILE_URL_MAX_AGE_MS,
-    loader: async () => {
-      const pages = await queryPosts({
-        filter: {
-          property: "Status",
-          status: { equals: "Publicado" },
-        },
-        sorts: [{ timestamp: "created_time", direction: "descending" }],
-      });
-
-      return pages.map(mapPostMeta);
+async function fetchFreshPublishedPosts(): Promise<BlogPostMeta[]> {
+  const pages = await queryPosts({
+    filter: {
+      property: "Status",
+      status: { equals: "Publicado" },
     },
+    sorts: [{ timestamp: "created_time", direction: "descending" }],
   });
+
+  return pages.map(mapPostMeta);
 }
 
-export async function getPostBySlug(slug: string): Promise<BlogPostMeta | null> {
-  return resolveWithSWR(`blog:post-meta:${slug}`, {
-    tags: ["blog:post-meta", `slug:${slug}`],
-    maxAgeMs: NOTION_FILE_URL_MAX_AGE_MS,
-    loader: async () => {
-      const pages = await queryPosts({
-        filter: {
-          property: "Slug",
-          rich_text: { equals: slug },
-        },
-        page_size: 1,
-      });
-
-      return pages[0] ? mapPostMeta(pages[0]) : null;
+async function fetchFreshPostMetaBySlug(slug: string): Promise<BlogPostMeta | null> {
+  const pages = await queryPosts({
+    filter: {
+      property: "Slug",
+      rich_text: { equals: slug },
     },
+    page_size: 1,
   });
+
+  return pages[0] ? mapPostMeta(pages[0]) : null;
 }
 
-export async function getPostByPageId(pageId: string): Promise<BlogPostMeta | null> {
+async function fetchFreshPostMetaByPageId(pageId: string): Promise<BlogPostMeta | null> {
   const page: any = await notion.pages.retrieve({ page_id: pageId });
 
   if (page?.object !== "page") return null;
@@ -120,6 +118,46 @@ export async function getPostByPageId(pageId: string): Promise<BlogPostMeta | nu
   }
 
   return mapPostMeta(page);
+}
+
+async function fetchFreshPostWithContentByPageId(pageId: string): Promise<BlogPost | null> {
+  const freshPost = await fetchFreshPostMetaByPageId(pageId);
+  if (!freshPost) return null;
+
+  const blocks = await getPageBlocksTree(freshPost.pageId);
+
+  return {
+    ...freshPost,
+    blocks,
+  };
+}
+
+export async function getAllPosts(): Promise<BlogPostMeta[]> {
+  return resolveWithSWR(getAllPostsKey(), {
+    tags: getListTags("all"),
+    maxAgeMs: NOTION_FILE_URL_MAX_AGE_MS,
+    loader: fetchFreshAllPosts,
+  });
+}
+
+export async function getPublishedPosts(): Promise<BlogPostMeta[]> {
+  return resolveWithSWR(getPublishedPostsKey(), {
+    tags: getListTags("published"),
+    maxAgeMs: NOTION_FILE_URL_MAX_AGE_MS,
+    loader: fetchFreshPublishedPosts,
+  });
+}
+
+export async function getPostBySlug(slug: string): Promise<BlogPostMeta | null> {
+  return resolveWithSWR(getPostMetaKey(slug), {
+    tags: ["blog:post-meta", `slug:${slug}`],
+    maxAgeMs: NOTION_FILE_URL_MAX_AGE_MS,
+    loader: async () => fetchFreshPostMetaBySlug(slug),
+  });
+}
+
+export async function getPostByPageId(pageId: string): Promise<BlogPostMeta | null> {
+  return fetchFreshPostMetaByPageId(pageId);
 }
 
 export async function getPostByPostId(postId: string): Promise<BlogPostMeta | null> {
@@ -143,20 +181,10 @@ export async function getPostWithContent(slug: string): Promise<BlogPost | null>
   const post = await getPostBySlug(slug);
   if (!post) return null;
 
-  return resolveWithSWR(`blog:post-content:${slug}`, {
+  return resolveWithSWR(getPostContentKey(slug), {
     tags: getPostTags(post),
     maxAgeMs: NOTION_FILE_URL_MAX_AGE_MS,
-    loader: async () => {
-      const freshPost = await getPostByPageId(post.pageId);
-      if (!freshPost) return null;
-
-      const blocks = await getPageBlocksTree(freshPost.pageId);
-
-      return {
-        ...freshPost,
-        blocks,
-      };
-    },
+    loader: async () => fetchFreshPostWithContentByPageId(post.pageId),
   });
 }
 
@@ -196,6 +224,42 @@ export async function purgePostCoverByPostId(postId: string) {
 
   await removeCoverCacheByPageId(post.pageId);
   return true;
+}
+
+export async function warmPostCacheByPageId(pageId: string) {
+  const freshPost = await fetchFreshPostMetaByPageId(pageId);
+  if (!freshPost || !freshPost.slug) return null;
+
+  setCache(getPostMetaKey(freshPost.slug), freshPost, {
+    tags: ["blog:post-meta", `slug:${freshPost.slug}`],
+    maxAgeMs: NOTION_FILE_URL_MAX_AGE_MS,
+  });
+
+  const freshPostWithContent = await fetchFreshPostWithContentByPageId(pageId);
+
+  if (freshPostWithContent) {
+    setCache(getPostContentKey(freshPost.slug), freshPostWithContent, {
+      tags: getPostTags(freshPost),
+      maxAgeMs: NOTION_FILE_URL_MAX_AGE_MS,
+    });
+  }
+
+  const freshAllPosts = await fetchFreshAllPosts();
+  setCache(getAllPostsKey(), freshAllPosts, {
+    tags: getListTags("all"),
+    maxAgeMs: NOTION_FILE_URL_MAX_AGE_MS,
+  });
+
+  const freshPublishedPosts = await fetchFreshPublishedPosts();
+  setCache(getPublishedPostsKey(), freshPublishedPosts, {
+    tags: getListTags("published"),
+    maxAgeMs: NOTION_FILE_URL_MAX_AGE_MS,
+  });
+
+  return {
+    post: freshPost,
+    postWithContent: freshPostWithContent,
+  };
 }
 
 function buildCoverVersion(version?: string) {
