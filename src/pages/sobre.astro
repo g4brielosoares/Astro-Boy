@@ -1,0 +1,40 @@
+---
+import BlogPost from "../layouts/BlogPost.astro";
+import cover from "../assets/placeholder.jpg";
+---
+
+<BlogPost
+  title="Sobre o Astro"
+  description="O que é Astro?"
+  publishedAt={new Date("01/08/2005")}
+  cover={cover.src}
+>
+  <p>
+    O Astro é um framework de desenvolvimento web moderno e focado em
+    performance, projetado especialmente para criar sites centrados em conteúdo,
+    como blogs, portfólios, documentações e e-commerces. Diferente de outros
+    frameworks que carregam grandes volumes de JavaScript no navegador, o Astro
+    prioriza a entrega de HTML puro, resultando em sites extremamente rápidos e
+    leves.
+  </p>
+
+  <p>
+    Uma das suas principais vantagens é a Arquitetura de Ilhas (Islands
+    Architecture), que permite que o desenvolvedor crie componentes interativos
+    isolados (as "ilhas") apenas onde o JavaScript é realmente necessário,
+    mantendo o restante da página estático. Além disso, o Astro é agnóstico de
+    framework, o que significa que você pode utilizar componentes de React, Vue,
+    Svelte ou Solid dentro de um mesmo projeto, aproveitando o melhor de cada
+    ecossistema.
+  </p>
+
+  <p>
+    Outro diferencial importante é a filosofia "Zero JavaScript por padrão", que
+    remove todo o código não utilizado durante o processo de build para garantir
+    tempos de carregamento mínimos. Com suporte nativo para Markdown, otimização
+    automática de imagens e a possibilidade de alternar facilmente entre geração
+    estática (SSG) e renderização no servidor (SSR), o Astro se consolidou como
+    uma das ferramentas favoritas para quem busca excelentes pontuações no Core
+    Web Vitals e uma ótima experiência de desenvolvimento.
+  </p>
+</BlogPost>

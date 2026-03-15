@@ -14,14 +14,14 @@ type Props = {
   author?: string;
   tags?: string[];
   id?: string;
-  pageId: string;
+  pageId?: string;
 };
 
 const {
   title,
   description,
   publishedAt,
-  lastEditedAt = publishedAt,
+  lastEditedAt,
   cover,
   author,
   tags = [],
