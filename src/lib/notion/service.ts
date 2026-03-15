@@ -198,7 +198,23 @@ export async function purgePostCoverByPostId(postId: string) {
   return true;
 }
 
-export function getOptimizedCoverUrl(pageId: string, width = 1200) {
+function buildCoverVersion(version?: string) {
+  const normalized = String(version || "").trim();
+  return normalized || "default";
+}
+
+export function getOptimizedCoverUrl(
+  pageId: string,
+  lastEditedAt?: string,
+  width = 1200
+) {
   const safeWidth = Number.isFinite(width) && width > 0 ? Math.round(width) : 1200;
-  return `/img/notion/cover/${encodeURIComponent(pageId)}?w=${safeWidth}`;
+  const version = buildCoverVersion(lastEditedAt);
+
+  const params = new URLSearchParams({
+    w: String(safeWidth),
+    v: version,
+  });
+
+  return `/img/notion/cover/${encodeURIComponent(pageId)}?${params.toString()}`;
 }

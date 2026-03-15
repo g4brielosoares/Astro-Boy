@@ -23,7 +23,7 @@ const posts = await getPublishedPosts();
       posts.map((post) => (
         <PostItem
           title={post.title}
-          cover={getOptimizedCoverUrl(post.pageId)}
+          cover={getOptimizedCoverUrl(post.pageId, post.lastEditedAt, 780)}
           slug={`/blog-notion/${post.slug}/`}
           pubDate={new Date(post.publishedAt)}
         />

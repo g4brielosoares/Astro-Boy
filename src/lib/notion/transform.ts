@@ -5,13 +5,14 @@ export type CoverImageFormat = "webp";
 
 export async function ensureDerivedCover(
   pageId: string,
+  version: string,
   originalFilePath: string,
   width = 1200,
   format: CoverImageFormat = "webp"
 ) {
   await ensureImageCacheDirs();
 
-  const outPath = getDerivedPath(pageId, width, format);
+  const outPath = getDerivedPath(pageId, version, width, format);
   if (await fileExists(outPath)) {
     return outPath;
   }

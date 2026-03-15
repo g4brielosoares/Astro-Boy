@@ -8,7 +8,7 @@ import { getOptimizedCoverUrl } from "../lib/notion/service";
 type Props = {
   title: string;
   description?: string;
-  publishedAt?: Date;
+  publishedAt: Date;
   lastEditedAt?: Date;
   cover?: string;
   author?: string;
@@ -21,7 +21,7 @@ const {
   title,
   description,
   publishedAt,
-  lastEditedAt,
+  lastEditedAt = publishedAt,
   cover,
   author,
   tags = [],
@@ -35,9 +35,14 @@ const {
       cover && (
         <figure>
           <img
-            src={pageId ? getOptimizedCoverUrl(pageId) : cover}
+            src={
+              pageId
+                ? getOptimizedCoverUrl(pageId, String(lastEditedAt), 1000)
+                : cover
+            }
             alt={title}
-            class="w-full aspect-video object-cover object-top rounded-xl block"
+            decoding="async"
+            class="w-full aspect-video object-cover object-center rounded-xl block"
           />
         </figure>
       )

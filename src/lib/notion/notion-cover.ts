@@ -13,6 +13,11 @@ export type CoverSource = {
   expiryTime?: string | null;
 };
 
+export type CoverVersionData = {
+  version: string;
+  lastEditedAt?: string;
+};
+
 async function getCoverSourceFromPage(pageId: string): Promise<CoverSource> {
   const page: any = await notion.pages.retrieve({ page_id: pageId });
   const coverProp = page?.properties?.["Capa"];
@@ -42,11 +47,11 @@ async function getCoverSourceFromPage(pageId: string): Promise<CoverSource> {
   throw new Error(`Tipo de cover não suportado na propriedade "Capa": ${firstFile.type}`);
 }
 
-export async function ensureOriginalCover(pageId: string) {
+export async function ensureOriginalCover(pageId: string, version: string) {
   await ensureImageCacheDirs();
 
-  const filePath = getOriginalPath(pageId);
-  const metaPath = getOriginalMetaPath(pageId);
+  const filePath = getOriginalPath(pageId, version);
+  const metaPath = getOriginalMetaPath(pageId, version);
 
   if (await fileExists(filePath)) {
     return { filePath, metaPath };
@@ -72,6 +77,7 @@ export async function ensureOriginalCover(pageId: string) {
     JSON.stringify(
       {
         pageId,
+        version,
         contentType,
         sourceType: source.type,
         originalUrl: source.url,

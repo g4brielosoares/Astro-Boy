@@ -15,8 +15,10 @@ export const GET: APIRoute = async ({ params, url }) => {
   const widthParam = Number(url.searchParams.get("w") || "1200");
   const width = Number.isFinite(widthParam) && widthParam > 0 ? Math.round(widthParam) : 1200;
 
-  const original = await ensureOriginalCover(pageId);
-  const derivedPath = await ensureDerivedCover(pageId, original.filePath, width, "webp");
+  const version = String(url.searchParams.get("v") || "default");
+
+  const original = await ensureOriginalCover(pageId, version);
+  const derivedPath = await ensureDerivedCover(pageId, version, original.filePath, width, "webp");
   const file = await fs.readFile(derivedPath);
 
   return new Response(file, {

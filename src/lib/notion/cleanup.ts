@@ -1,11 +1,12 @@
 import {
+  getCoverBasePrefix,
   getDerivedDir,
   getOriginalDir,
   removeFilesByPrefix,
 } from "./fs";
 
 export async function removeCoverCacheByPageId(pageId: string) {
-  const prefix = `page_${pageId}__cover`;
+  const prefix = getCoverBasePrefix(pageId);
 
   await Promise.all([
     removeFilesByPrefix(getOriginalDir(), prefix),
