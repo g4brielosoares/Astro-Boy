@@ -27,37 +27,64 @@ function getChangedPageId(payload: any) {
   return payload?.entity?.id ?? payload?.data?.id ?? payload?.page?.id ?? null;
 }
 
-// temporário
-export const GET: APIRoute = async () => {
-  return new Response(
-    JSON.stringify({ ok: true, route: "notion-webhook" }),
-    {
-      status: 200,
-      headers: { "content-type": "application/json" },
-    }
-  );
-};
-
 export const POST: APIRoute = async ({ request }) => {
   const rawBody = await request.text();
-  console.log("RAW BODY:", rawBody);
 
-  let payload: any = null;
+  let payload: any;
+
   try {
     payload = JSON.parse(rawBody);
-  } catch {}
-
-  if (payload?.verification_token) {
-    console.log("NOTION VERIFICATION TOKEN:", payload.verification_token);
-
-    return new Response("verification-token-received", {
-      status: 200,
-      headers: { "content-type": "text/plain; charset=utf-8" },
+  } catch {
+    return new Response(JSON.stringify({ ok: false, error: "invalid_json" }), {
+      status: 400,
+      headers: { "content-type": "application/json" },
     });
   }
 
-  return new Response("ok", {
+  // Primeiro POST de verificação do Notion
+  if (payload?.verification_token) {
+    console.log("NOTION VERIFICATION TOKEN:", payload.verification_token);
+
+    return new Response(
+      JSON.stringify({
+        ok: true,
+        receivedVerificationToken: true,
+      }),
+      {
+        status: 200,
+        headers: { "content-type": "application/json" },
+      }
+    );
+  }
+
+  const signature = request.headers.get("x-notion-signature");
+
+  if (!verifySignature(rawBody, signature)) {
+    return new Response(JSON.stringify({ ok: false, error: "invalid_signature" }), {
+      status: 401,
+      headers: { "content-type": "application/json" },
+    });
+  }
+
+  const eventType = payload?.type ?? "unknown";
+  const pageId = getChangedPageId(payload);
+
+  if (
+    eventType === "page.created" ||
+    eventType === "page.properties_updated" ||
+    eventType === "page.content_updated"
+  ) {
+    if (pageId) {
+      await markPostAndListsStale(pageId);
+    } else {
+      markListsStale();
+    }
+  } else if (eventType === "data_source.content_updated") {
+    markListsStale();
+  }
+
+  return new Response(JSON.stringify({ ok: true, eventType, pageId }), {
     status: 200,
-    headers: { "content-type": "text/plain; charset=utf-8" },
+    headers: { "content-type": "application/json" },
   });
 };
