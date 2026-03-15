@@ -3,6 +3,8 @@ import fs from "node:fs/promises";
 import { ensureOriginalCover } from "../../../../lib/notion/notion-cover";
 import { ensureDerivedCover } from "../../../../lib/notion/transform";
 
+export const prerender = false;
+
 export const GET: APIRoute = async ({ params, url }) => {
   const pageId = params.pageId;
 
