@@ -1,13 +1,10 @@
 ---
 export const prerender = false;
 
-import PostItem from "../../components/PostItem.astro";
-import Layout from "../../layouts/Layout.astro";
+import PostItem from "@/components/PostItem.astro";
+import Layout from "@/layouts/Layout.astro";
 
-import {
-  getOptimizedCoverUrl,
-  getPublishedPosts,
-} from "../../lib/notion/service";
+import { getOptimizedCoverUrl, getPublishedPosts } from "@notion/service";
 
 const posts = await getPublishedPosts();
 ---

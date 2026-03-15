@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 import fs from "node:fs/promises";
-import { ensureOriginalCover } from "../../../../lib/notion/notion-cover";
-import { ensureDerivedCover } from "../../../../lib/notion/transform";
+import { ensureOriginalCover } from "@notion/cover";
+import { ensureDerivedCover } from "@notion/transform";
 
 export const prerender = false;
 

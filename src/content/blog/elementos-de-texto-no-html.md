@@ -1,5 +1,5 @@
 ---
-layout: ../../layouts/BlogPost.astro
+layout: "@/layouts/PostLayout.astro"
 title: "Elementos de Texto no HTML"
 description: "Aprenda a usar corretamente títulos, parágrafos, destaques, citações, código, datas e elementos de texto no HTML com semântica e clareza."
 pubDate: 2026-03-06
@@ -16,7 +16,7 @@ tags:
     "seo",
     "acessibilidade",
   ]
-heroImage: "../../assets/Gemini_Generated_Image_f3h5tnf3h5tnf3h5.png"
+heroImage: "@/assets/post-placeholder.png"
 ---
 
 > Depois de entender a base do documento HTML e o layout semântico da página, o próximo passo é dominar os elementos de texto.  

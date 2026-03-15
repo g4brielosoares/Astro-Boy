@@ -1,11 +1,11 @@
 ---
-layout: ../../layouts/BlogPost.astro
+layout: "@/layouts/PostLayout.astro"
 title: "Estrutura Base do HTML e Metadados"
 description: "Aprenda a montar a base de um documento HTML corretamente, entendendo a função de doctype, html, head, body, title, meta, link, style e base."
 pubDate: 2026-03-06
 author: "Criativiarte"
 tags: ["html", "html5", "webdev", "astro", "seo", "semantica"]
-heroImage: "../../assets/Gemini_Generated_Image_f3h5tnf3h5tnf3h5.png"
+heroImage: "@/assets/post-placeholder.png"
 ---
 
 > Antes de falar sobre layout, textos, links, mídia, formulários ou acessibilidade, você precisa dominar a estrutura base de um documento HTML.  

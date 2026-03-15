@@ -1,11 +1,11 @@
 ---
-layout: ../../layouts/BlogPost.astro
+layout: "@/layouts/PostLayout.astro"
 title: "Layout Semântico no HTML"
 description: "Entenda como organizar a estrutura de uma página com header, nav, main, section, article, aside, footer e address, usando semântica de forma correta."
 pubDate: 2026-03-06
 author: "Criativiarte"
 tags: ["html", "html5", "semantica", "webdev", "astro", "seo", "acessibilidade"]
-heroImage: "../../assets/Gemini_Generated_Image_f3h5tnf3h5tnf3h5.png"
+heroImage: "@/assets/post-placeholder.png"
 ---
 
 > Depois de entender a base do documento HTML, o próximo passo é organizar o conteúdo da página com semântica.  

@@ -16,7 +16,7 @@ const variantsMap = {
 
 export type Variants = keyof typeof variantsMap;
 
-interface Props extends HTMLAttributes<"article"> {
+export interface Props extends HTMLAttributes<"article"> {
   title?: string;
   variant?: Variants;
   index?: string | number;

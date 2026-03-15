@@ -1,5 +1,5 @@
 ---
-layout: ../../layouts/BlogPost.astro
+layout: "@/layouts/PostLayout.astro"
 title: "Imagens e Mídia no HTML"
 description: "Aprenda a usar corretamente img, picture, figure, figcaption, audio, video, source, track, iframe e outros elementos de mídia no HTML com foco em semântica, acessibilidade e performance."
 pubDate: 2026-03-06
@@ -18,7 +18,7 @@ tags:
     "acessibilidade",
     "performance",
   ]
-heroImage: "../../assets/Gemini_Generated_Image_f3h5tnf3h5tnf3h5.png"
+heroImage: "@/assets/post-placeholder.png"
 ---
 
 > Imagens, vídeos, áudios e conteúdos incorporados fazem parte da maioria dos projetos modernos.  

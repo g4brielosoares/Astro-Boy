@@ -1,5 +1,5 @@
 ---
-layout: ../../layouts/BlogPost.astro
+layout: "@/layouts/PostLayout.astro"
 title: "Links e Navegação no HTML"
 description: "Aprenda a usar a tag a corretamente em links internos, externos, âncoras, e-mail, telefone, download, navegação acessível e padrões de usabilidade."
 pubDate: 2026-03-06
@@ -16,7 +16,7 @@ tags:
     "seo",
     "acessibilidade",
   ]
-heroImage: "../../assets/Gemini_Generated_Image_f3h5tnf3h5tnf3h5.png"
+heroImage: "@/assets/post-placeholder.png"
 ---
 
 > A navegação é uma das partes mais importantes de qualquer interface.  

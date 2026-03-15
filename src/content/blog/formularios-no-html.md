@@ -1,5 +1,5 @@
 ---
-layout: ../../layouts/BlogPost.astro
+layout: "@/layouts/PostLayout.astro"
 title: "Formulários no HTML"
 description: "Aprenda a usar form, label, input, textarea, select, option, button, fieldset, legend, datalist, output, progress e meter com semântica, acessibilidade e usabilidade."
 pubDate: 2026-03-06
@@ -16,7 +16,7 @@ tags:
     "acessibilidade",
     "ux",
   ]
-heroImage: "../../assets/Gemini_Generated_Image_f3h5tnf3h5tnf3h5.png"
+heroImage: "@/assets/post-placeholder.png"
 ---
 
 > Formulários são uma das partes mais importantes da web.  

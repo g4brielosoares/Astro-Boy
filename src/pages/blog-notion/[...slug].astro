@@ -1,10 +1,10 @@
 ---
 export const prerender = false;
 
-import PostLayout from "../../layouts/PostLayout.astro";
-import RenderNodes from "../../components/notion/RenderNodes.astro";
-import { getPostWithContent } from "../../lib/notion/service";
-import { mapBlocksToRenderTree } from "../../lib/notion/render.mapper";
+import PostLayout from "@/layouts/PostLayout.astro";
+import RenderNodes from "@/components/notion/RenderNodes.astro";
+import { getPostWithContent } from "@notion/service";
+import { mapBlocksToRenderTree } from "@notion/render.mapper";
 
 const { slug } = Astro.params;
 const post = slug ? await getPostWithContent(slug) : null;

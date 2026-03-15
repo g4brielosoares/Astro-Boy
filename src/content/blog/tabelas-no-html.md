@@ -1,5 +1,5 @@
 ---
-layout: ../../layouts/BlogPost.astro
+layout: "@/layouts/PostLayout.astro"
 title: "Tabelas no HTML"
 description: "Aprenda a usar table, caption, thead, tbody, tfoot, tr, th, td, colgroup e col corretamente para exibir dados tabulares com semântica, acessibilidade e clareza."
 pubDate: 2026-03-06
@@ -16,7 +16,7 @@ tags:
     "acessibilidade",
     "dados",
   ]
-heroImage: "../../assets/Gemini_Generated_Image_f3h5tnf3h5tnf3h5.png"
+heroImage: "@/assets/post-placeholder.png"
 ---
 
 > Tabelas continuam sendo essenciais na web quando o objetivo é exibir dados estruturados em linhas e colunas.  

@@ -3,7 +3,7 @@ import fs from "node:fs/promises";
 import {
   ensureDerivedBlockImage,
   ensureOriginalBlockAsset,
-} from "../../../../../lib/notion/notion-asset";
+} from "@notion/asset";
 
 export const prerender = false;
 

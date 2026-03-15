@@ -1,9 +1,9 @@
 ---
-import "../styles/post.css";
+import "@/styles/post.css";
 
 import Layout from "./Layout.astro";
-import FormattedDate from "../components/FormattedDate.astro";
-import { getOptimizedCoverUrl } from "../lib/notion/service";
+import FormattedDate from "@/components/FormattedDate.astro";
+import { getOptimizedCoverUrl } from "@notion/service";
 
 type Props = {
   title: string;

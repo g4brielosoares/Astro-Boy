@@ -1,5 +1,5 @@
 ---
-layout: ../../layouts/BlogPost.astro
+layout: "@/layouts/PostLayout.astro"
 title: "Acessibilidade HTML e ARIA"
 description: "Aprenda a usar acessibilidade no HTML com elementos semânticos, navegação por teclado, textos alternativos, formulários acessíveis e os principais atributos ARIA."
 pubDate: 2026-03-06
@@ -16,7 +16,7 @@ tags:
     "ux",
     "inclusao",
   ]
-heroImage: "../../assets/Gemini_Generated_Image_f3h5tnf3h5tnf3h5.png"
+heroImage: "@/assets/post-placeholder.png"
 ---
 
 > Acessibilidade não é um detalhe opcional.  

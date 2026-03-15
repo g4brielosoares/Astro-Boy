@@ -5,7 +5,7 @@ import {
   markPostAndListsStale,
   purgePostAssetsByPageId,
   warmPostCacheByPageId,
-} from "../../lib/notion/service";
+} from "@notion/service";
 
 export const prerender = false;
 
