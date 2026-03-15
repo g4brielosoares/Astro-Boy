@@ -1,9 +1,9 @@
 ---
-import BlogPost from "../layouts/BlogPost.astro";
+import PostLayout from "../layouts/PostLayout.astro";
 import cover from "../assets/placeholder.jpg";
 ---
 
-<BlogPost
+<PostLayout
   title="Sobre o Astro"
   description="O que é Astro?"
   publishedAt={new Date("01/08/2005")}
@@ -62,4 +62,4 @@ import cover from "../assets/placeholder.jpg";
     reutilização de componentes e ajuda a criar interfaces mais enxutas,
     profissionais e preparadas para evoluir com consistência.
   </p>
-</BlogPost>
+</PostLayout>

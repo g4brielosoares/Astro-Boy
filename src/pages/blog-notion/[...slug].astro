@@ -1,7 +1,7 @@
 ---
 export const prerender = false;
 
-import BLogPost from "../../layouts/BlogPost.astro";
+import PostLayout from "../../layouts/PostLayout.astro";
 import RenderNodes from "../../components/notion/RenderNodes.astro";
 import { getPostWithContent } from "../../lib/notion/service";
 import { mapBlocksToRenderTree } from "../../lib/notion/render.mapper";
@@ -16,7 +16,7 @@ if (!post) {
 const content = mapBlocksToRenderTree(post.blocks);
 ---
 
-<BLogPost
+<PostLayout
   title={post.title}
   description=""
   publishedAt={new Date(post.publishedAt)}
@@ -28,4 +28,4 @@ const content = mapBlocksToRenderTree(post.blocks);
   pageId={post.pageId}
 >
   <RenderNodes nodes={content} />
-</BLogPost>
+</PostLayout>
