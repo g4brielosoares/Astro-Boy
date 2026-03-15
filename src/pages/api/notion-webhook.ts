@@ -90,3 +90,14 @@ export const POST: APIRoute = async ({ request }) => {
     headers: { "content-type": "application/json" },
   });
 };
+
+// temporário
+export const GET: APIRoute = async () => {
+  return new Response(
+    JSON.stringify({ ok: true, route: "notion-webhook" }),
+    {
+      status: 200,
+      headers: { "content-type": "application/json" },
+    }
+  );
+};
