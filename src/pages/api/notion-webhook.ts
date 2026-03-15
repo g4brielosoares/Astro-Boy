@@ -1,10 +1,6 @@
 import type { APIRoute } from "astro";
 import crypto from "node:crypto";
-import {
-  markListsStale,
-  markPostAndListsStale,
-  purgePostCoverByPageId,
-} from "../../lib/notion/service";
+import { markListsStale, markPostAndListsStale } from "../../lib/notion/service";
 
 const NOTION_WEBHOOK_SECRET = import.meta.env.NOTION_WEBHOOK_SECRET;
 
@@ -31,6 +27,36 @@ function getChangedPageId(payload: any) {
 
 export const POST: APIRoute = async ({ request }) => {
   const rawBody = await request.text();
+
+  let payload: any;
+
+  try {
+    payload = JSON.parse(rawBody);
+  } catch {
+    return new Response(JSON.stringify({ ok: false, error: "invalid_json" }), {
+      status: 400,
+      headers: { "content-type": "application/json" },
+    });
+  }
+
+  // Etapa inicial do webhook do Notion:
+  // o Notion envia um POST com verification_token para você copiar e colar no painel.
+  if (payload?.verification_token) {
+    console.log("NOTION VERIFICATION TOKEN:", payload.verification_token);
+
+    return new Response(
+      JSON.stringify({
+        ok: true,
+        receivedVerificationToken: true,
+        verification_token: payload.verification_token,
+      }),
+      {
+        status: 200,
+        headers: { "content-type": "application/json" },
+      }
+    );
+  }
+
   const signature = request.headers.get("x-notion-signature");
 
   if (!verifySignature(rawBody, signature)) {
@@ -40,7 +66,6 @@ export const POST: APIRoute = async ({ request }) => {
     });
   }
 
-  const payload = JSON.parse(rawBody);
   const eventType = payload?.type ?? "unknown";
   const pageId = getChangedPageId(payload);
 
@@ -51,15 +76,6 @@ export const POST: APIRoute = async ({ request }) => {
   ) {
     if (pageId) {
       await markPostAndListsStale(pageId);
-
-      try {
-        await purgePostCoverByPageId(pageId);
-      } catch (error) {
-        console.warn("Falha ao limpar cover cache após alteração do post.", {
-          pageId,
-          error,
-        });
-      }
     } else {
       markListsStale();
     }
@@ -69,7 +85,7 @@ export const POST: APIRoute = async ({ request }) => {
     markListsStale();
   }
 
-  return new Response(JSON.stringify({ ok: true }), {
+  return new Response(JSON.stringify({ ok: true, eventType, pageId }), {
     status: 200,
     headers: { "content-type": "application/json" },
   });
