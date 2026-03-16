@@ -10,19 +10,21 @@ export interface Props {
 
 const {
   title = SITE_TITLE,
-  description = SITE_DESCRIPTION,
-  imageURL = "../assets/openGraph.png",
+  description,
+  imageURL = "@/assets/open-graph.png",
   canonicalURL = new URL(Astro.url.pathname, Astro.site),
 } = Astro.props;
 
-const fellOnBlackDays =
+const titleFormatted =
   title === SITE_TITLE ? SITE_TITLE : title + " - " + SITE_TITLE;
+const descriptionFormatted =
+  description === "" || !description ? SITE_DESCRIPTION : description;
 ---
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->
 <link rel="icon" href="/favicon.ico" />
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link
@@ -53,20 +55,20 @@ const fellOnBlackDays =
 <link rel="canonical" href={canonicalURL} />
 
 <!-- Primary Meta Tags -->
-<title>{fellOnBlackDays}</title>
-<meta name="title" content={fellOnBlackDays} />
-<meta name="description" content={description} />
+<title>{titleFormatted}</title>
+<meta name="title" content={titleFormatted} />
+<meta name="description" content={descriptionFormatted} />
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
 <meta property="og:url" content={Astro.url} />
-<meta property="og:title" content={fellOnBlackDays} />
-<meta property="og:description" content={description} />
+<meta property="og:title" content={titleFormatted} />
+<meta property="og:description" content={descriptionFormatted} />
 <meta property="og:image" content={new URL(imageURL, Astro.url)} />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content={Astro.url} />
-<meta property="twitter:title" content={fellOnBlackDays} />
-<meta property="twitter:description" content={description} />
+<meta property="twitter:title" content={titleFormatted} />
+<meta property="twitter:description" content={descriptionFormatted} />
 <meta property="twitter:image" content={new URL(imageURL, Astro.url)} />

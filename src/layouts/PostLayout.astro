@@ -2,8 +2,9 @@
 import "@/styles/post.css";
 
 import Layout from "./Layout.astro";
-import FormattedDate from "@/components/FormattedDate.astro";
+import FormattedDate from "@/components/primitives/content/FormattedDate.astro";
 import { getOptimizedCoverUrl } from "@notion/service";
+import Container from "@/components/primitives/layout/Container.astro";
 
 type Props = {
   title: string;
@@ -30,10 +31,10 @@ const {
 ---
 
 <Layout {title} {description}>
-  <article class="space-y-4 md:space-y-6 max-w-250 m-auto">
-    {
-      cover && (
-        <figure>
+  <article class="space-y-6 py-30">
+    <figure class="w-19/20 max-w-275 space-y-6! mx-auto">
+      {
+        cover && (
           <img
             src={
               pageId
@@ -42,47 +43,47 @@ const {
             }
             alt={title}
             decoding="async"
-            class="w-full aspect-video object-cover object-center rounded-xl block"
+            class="w-full aspect-video object-cover object-center xl:rounded-xl"
           />
-        </figure>
-      )
-    }
+        )
+      }
 
-    <div class="flex flex-col md:flex-row gap-1 md:justify-between">
-      <div class="flex flex-col gap-1">
-        {
-          publishedAt && (
-            <span>
-              Criado em <FormattedDate date={publishedAt} />
-            </span>
-          )
-        }
-        {
-          lastEditedAt && (
-            <span>
-              Atualizado em <FormattedDate date={lastEditedAt} />
-            </span>
-          )
-        }
-      </div>
-
-      {author && <span>Por {author}</span>}
-    </div>
-
-    <h1 class="text-center">{title}</h1>
-
-    {
-      tags.length > 0 && (
-        <div class="flex flex-wrap justify-center gap-2">
-          {tags.map((tag) => (
-            <span class="px-3 py-1 rounded-full text-sm border-2 bg-white/10 border-white/20">
-              {tag}
-            </span>
-          ))}
+      <figcaption
+        class="flex flex-col xl:flex-row space-y-1 items-center xl:justify-between max-xl:text-center"
+      >
+        <div class="space-y-1">
+          {
+            publishedAt && (
+              <div>
+                Criado em <FormattedDate date={publishedAt} />
+              </div>
+            )
+          }
+          {
+            lastEditedAt && (
+              <div>
+                Atualizado em <FormattedDate date={lastEditedAt} />
+              </div>
+            )
+          }
         </div>
-      )
-    }
-
-    <slot />
+        {author && <span>Por {author}</span>}
+      </figcaption>
+    </figure>
+    <Container class="space-y-6 max-w-200!">
+      <h1 class="text-center">{title}</h1>
+      {
+        tags.length > 0 && (
+          <div class="flex flex-wrap justify-center gap-2">
+            {tags.map((tag) => (
+              <span class="px-3 py-1 rounded-full text-sm border-2 bg-white/10 border-white/20">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )
+      }
+      <slot />
+    </Container>
   </article>
 </Layout>

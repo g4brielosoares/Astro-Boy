@@ -1,7 +1,8 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
-import PostItem from "@/components/PostItem.astro";
+import PostItem from "@/components/patterns/PostItem.astro";
+import Container from "@/components/primitives/layout/Container.astro";
 
 const posts = (await getCollection("blog")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
@@ -9,17 +10,19 @@ const posts = (await getCollection("blog")).sort(
 ---
 
 <Layout title="Blog" description="Um blog que mostra o poder do Astro nativo!">
-  <h1>Blog</h1>
-  <section class="grid grid-cols-1 md:grid-cols-2 gap-5">
-    {
-      posts.map((post) => (
-        <PostItem
-          title={post.data.title}
-          slug={`/blog/${post.id}/`}
-          cover={post.data.heroImage?.src}
-          pubDate={post.data.pubDate}
-        />
-      ))
-    }
-  </section>
+  <Container class="pb-30 pt-60 space-y-6">
+    <h1>Blog</h1>
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      {
+        posts.map((post) => (
+          <PostItem
+            title={post.data.title}
+            slug={`/blog/${post.id}/`}
+            cover={post.data.heroImage?.src}
+            pubDate={post.data.pubDate}
+          />
+        ))
+      }
+    </section>
+  </Container>
 </Layout>

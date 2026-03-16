@@ -1,7 +1,8 @@
 ---
 export const prerender = false;
 
-import PostItem from "@/components/PostItem.astro";
+import PostItem from "@/components/patterns/PostItem.astro";
+import Container from "@/components/primitives/layout/Container.astro";
 import Layout from "@/layouts/Layout.astro";
 
 import { getOptimizedCoverUrl, getPublishedPosts } from "@notion/service";
@@ -13,18 +14,19 @@ const posts = await getPublishedPosts();
   title="Notion Blog"
   description="Um blog que mostra o poder do Astro integrado ao Notion!"
 >
-  <h1>Blog Notion</h1>
-
-  <section class="grid grid-cols-1 md:grid-cols-2 gap-5">
-    {
-      posts.map((post) => (
-        <PostItem
-          title={post.title}
-          cover={getOptimizedCoverUrl(post.pageId, post.lastEditedAt, 780)}
-          slug={`/blog-notion/${post.slug}/`}
-          pubDate={new Date(post.publishedAt)}
-        />
-      ))
-    }
-  </section>
+  <Container class="pb-30 pt-60 space-y-6">
+    <h1>Blog Notion</h1>
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      {
+        posts.map((post) => (
+          <PostItem
+            title={post.title}
+            cover={getOptimizedCoverUrl(post.pageId, post.lastEditedAt, 780)}
+            slug={`/blog-notion/${post.slug}/`}
+            pubDate={new Date(post.publishedAt)}
+          />
+        ))
+      }
+    </section>
+  </Container>
 </Layout>

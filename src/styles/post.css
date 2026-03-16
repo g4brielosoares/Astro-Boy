@@ -36,7 +36,7 @@ ol {
 }
 
 img {
-  @apply max-w-full h-auto rounded-lg m-auto;
+  @apply max-w-full h-auto rounded-xl m-auto;
 }
 
 code {
