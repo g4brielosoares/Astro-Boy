@@ -60,7 +60,7 @@ const {
             )
           }
           {
-            lastEditedAt && (
+            lastEditedAt && lastEditedAt !== publishedAt && (
               <div>
                 Atualizado em <FormattedDate date={lastEditedAt} />
               </div>
