@@ -60,11 +60,12 @@ const {
             )
           }
           {
-            lastEditedAt && lastEditedAt !== publishedAt && (
-              <div>
-                Atualizado em <FormattedDate date={lastEditedAt} />
-              </div>
-            )
+            lastEditedAt &&
+              lastEditedAt.getDate() !== publishedAt.getDate() && (
+                <div>
+                  Atualizado em <FormattedDate date={lastEditedAt} />
+                </div>
+              )
           }
         </div>
         {author && <span>Por {author}</span>}
