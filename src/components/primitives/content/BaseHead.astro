@@ -1,74 +1,59 @@
 ---
-import { SITE_TITLE, SITE_DESCRIPTION } from "@/config/consts";
+import { SITE_TITLE, SITE_DESCRIPTION, SITE_IMAGE } from "@/config/consts";
 
 export interface Props {
   title?: string;
   description?: string;
   imageURL?: string;
   canonicalURL?: string;
+  noindex?: boolean;
 }
 
 const {
   title = SITE_TITLE,
   description,
-  imageURL = "@/assets/open-graph.png",
-  canonicalURL = new URL(Astro.url.pathname, Astro.site),
+  imageURL = SITE_IMAGE,
+  canonicalURL,
+  noindex = false,
 } = Astro.props;
 
+if (!Astro.site) {
+  throw new Error("Astro.site precisa estar definido no astro.config.mjs.");
+}
+
 const titleFormatted =
-  title === SITE_TITLE ? SITE_TITLE : title + " - " + SITE_TITLE;
-const descriptionFormatted =
-  description === "" || !description ? SITE_DESCRIPTION : description;
+  title === SITE_TITLE ? SITE_TITLE : `${title} - ${SITE_TITLE}`;
+
+const descriptionFormatted = description?.trim() || SITE_DESCRIPTION;
+
+const canonicalFormatted = canonicalURL
+  ? new URL(canonicalURL, Astro.site).toString()
+  : new URL(Astro.url.pathname, Astro.site).toString();
+
+const imageFormatted = new URL(imageURL, Astro.site).toString();
+
+const robots = noindex ? "noindex, nofollow" : "index, follow";
 ---
 
-<!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->
 <link rel="icon" href="/favicon.ico" />
-<link rel="sitemap" href="/sitemap-index.xml" />
-<link
-  rel="alternate"
-  type="application/rss+xml"
-  title={SITE_TITLE}
-  href={new URL("rss.xml", Astro.site)}
-/>
+<link rel="canonical" href={canonicalFormatted} />
 <meta name="generator" content={Astro.generator} />
+<meta name="robots" content={robots} />
 
-<!-- Font preloads -->
-<link
-  rel="preload"
-  href="/fonts/atkinson-regular.woff"
-  as="font"
-  type="font/woff"
-  crossorigin
-/>
-<link
-  rel="preload"
-  href="/fonts/atkinson-bold.woff"
-  as="font"
-  type="font/woff"
-  crossorigin
-/>
-
-<!-- Canonical URL -->
-<link rel="canonical" href={canonicalURL} />
-
-<!-- Primary Meta Tags -->
 <title>{titleFormatted}</title>
-<meta name="title" content={titleFormatted} />
 <meta name="description" content={descriptionFormatted} />
 
-<!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
-<meta property="og:url" content={Astro.url} />
+<meta property="og:url" content={canonicalFormatted} />
 <meta property="og:title" content={titleFormatted} />
 <meta property="og:description" content={descriptionFormatted} />
-<meta property="og:image" content={new URL(imageURL, Astro.url)} />
+<meta property="og:image" content={imageFormatted} />
+<meta property="og:site_name" content={SITE_TITLE} />
 
-<!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={Astro.url} />
-<meta property="twitter:title" content={titleFormatted} />
-<meta property="twitter:description" content={descriptionFormatted} />
-<meta property="twitter:image" content={new URL(imageURL, Astro.url)} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalFormatted} />
+<meta name="twitter:title" content={titleFormatted} />
+<meta name="twitter:description" content={descriptionFormatted} />
+<meta name="twitter:image" content={imageFormatted} />
