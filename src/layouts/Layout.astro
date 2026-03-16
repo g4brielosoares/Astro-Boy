@@ -22,10 +22,10 @@ const { title, description, imageURL } = Astro.props;
       transition:animate="fade"
       transition:persist
     />
-    <ClientRouter />
     <main>
       <slot />
     </main>
     <Footer />
+    <ClientRouter />
   </body>
 </html>
