@@ -20,6 +20,8 @@ const posts = (await getCollection("blog")).sort(
             slug={`/blog/${post.id}/`}
             cover={post.data.heroImage?.src}
             pubDate={post.data.pubDate}
+            transition:name="listing"
+            transition:animate="fade"
           />
         ))
       }

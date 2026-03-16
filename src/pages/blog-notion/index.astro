@@ -6,6 +6,7 @@ import Container from "@/components/primitives/layout/Container.astro";
 import Layout from "@/layouts/Layout.astro";
 
 import { getOptimizedCoverUrl, getPublishedPosts } from "@notion/service";
+import { slide } from "astro:transitions";
 
 const posts = await getPublishedPosts();
 ---
@@ -24,6 +25,8 @@ const posts = await getPublishedPosts();
             cover={getOptimizedCoverUrl(post.pageId, post.lastEditedAt, 780)}
             slug={`/blog-notion/${post.slug}/`}
             pubDate={new Date(post.publishedAt)}
+            transition:name="listing"
+            transition:animate="fade"
           />
         ))
       }
